@@ -1,5 +1,5 @@
 import '../styles/globals.scss'
-import Header from '../components/Header'
+import Header from '../components/Header/index'
 import Head from 'next/head'
 import Container from '../components/Container'
 
