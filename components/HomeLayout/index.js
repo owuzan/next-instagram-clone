@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Post from '../Post'
+import UserPost from '../UserPost'
 import React, { useState, useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import StoriesBar from '../StoriesBar'
@@ -26,8 +26,8 @@ export default function Home() {
                     <div className={styles.posts}>
                         {
                             <>
-                                <Post />
-                                <Post
+                                <UserPost />
+                                <UserPost
                                     username={"suleyman"}
                                     userSrc={"suleyman.jpg"}
                                     postSrc={"suleyman-example.jpg"}
@@ -37,7 +37,7 @@ export default function Home() {
 
                         {
                             posts.map((post, id) => {
-                                return <Post
+                                return <UserPost
                                     key={id}
                                     postDescription={post.data().caption}
                                     postSrc={post.data().images[0]}
