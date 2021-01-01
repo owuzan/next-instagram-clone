@@ -1,9 +1,28 @@
-import React from 'react'
+import * as React from "react";
 
-export default function Message({ size = "1em" }) {
-    return (
-        <svg width={size} height={size} viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.9083 0.741667C21.7708 0.5125 21.5417 0.375 21.3125 0.375H0.6875C0.4125 0.420833 0.1375 0.604167 0.0458333 0.833333C-0.0458333 1.0625 0 1.38333 0.183333 1.6125L7.47083 8.7625L9.99167 19.1208C10.0375 19.3958 10.2667 19.5792 10.5417 19.625H10.6333C10.8625 19.625 11.0917 19.4875 11.2292 19.3042L21.8625 1.42917C22.0458 1.24583 22.0458 0.970833 21.9083 0.741667ZM2.38333 1.79583H18.6542L8.25 7.57083L2.38333 1.79583ZM10.9542 17.1958L8.9375 8.7625L19.4333 2.94167L10.9542 17.1958Z" fill="currentColor" />
-        </svg>
-    )
+function SvgMessage(props) {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 22 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g clipPath="url(#Message_svg__clip0)">
+        <path
+          d="M21.908 1.742c-.137-.23-.366-.367-.596-.367H.688c-.275.046-.55.23-.641.458-.092.23-.046.55.137.78l7.288 7.15L9.99 20.12c.046.275.276.458.55.504h.092c.23 0 .459-.137.596-.32L21.863 2.428c.183-.183.183-.458.045-.687zM2.383 2.796h16.271L8.25 8.57 2.383 2.796zm8.571 15.4L8.937 9.762l10.496-5.82-8.479 14.254z"
+          fill="currentColor"
+        />
+      </g>
+      <defs>
+        <clipPath id="Message_svg__clip0">
+          <path fill="#fff" d="M0 0h22v22H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
 }
+
+export default SvgMessage;

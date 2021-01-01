@@ -1,9 +1,28 @@
-import React from 'react'
+import * as React from "react";
 
-export default function HomeFill({ size = "1em" }) {
-    return (
-        <svg width={size} height={size} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.8542 22H13.7958C13.4292 22 13.1083 21.6792 13.1083 21.3125V15.675C13.1083 14.4833 12.1458 13.5667 11 13.5667C9.85417 13.5667 8.89167 14.5292 8.89167 15.675V21.3125C8.89167 21.6792 8.57083 22 8.20417 22H1.14583C0.779165 22 0.458332 21.6792 0.458332 21.3125V10.5417C0.458332 10.3583 0.549999 10.175 0.641665 10.0375L10.4958 0.183331C10.7708 -0.0916687 11.2292 -0.0916687 11.4583 0.183331L21.3125 10.0375C21.45 10.175 21.4958 10.3583 21.4958 10.5417V21.3125C21.5417 21.6792 21.2208 22 20.8542 22Z" fill="currentColor" />
-        </svg>
-    )
+function SvgHomeFill(props) {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 22 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g clipPath="url(#HomeFill_svg__clip0)">
+        <path
+          d="M20.854 22h-7.058a.705.705 0 01-.688-.688v-5.637A2.103 2.103 0 0011 13.567a2.133 2.133 0 00-2.108 2.108v5.637c0 .367-.321.688-.688.688H1.146a.705.705 0 01-.688-.688v-10.77c0-.184.092-.367.184-.505L10.496.184c.275-.275.733-.275.962 0l9.854 9.854c.138.138.184.321.184.505v10.77c.046.367-.275.688-.642.688z"
+          fill="currentColor"
+        />
+      </g>
+      <defs>
+        <clipPath id="HomeFill_svg__clip0">
+          <path fill="#fff" d="M0 0h22v22H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
 }
+
+export default SvgHomeFill;

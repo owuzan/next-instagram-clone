@@ -1,9 +1,23 @@
-import React from 'react'
+import * as React from "react";
 
-export default function ExploreFill({ size = "1em" }) {
-    return (
-        <svg width={size} height={size} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" clipRule="evenodd" d="M11 0C4.95 0 0 4.95 0 11C0 17.05 4.95 22 11 22C17.05 22 22 17.05 22 11C22 4.95 17.05 0 11 0ZM16.5917 6.325L13.3833 13.1083C13.3375 13.2458 13.2 13.3833 13.0625 13.4292L6.27917 16.6375C6.1875 16.6833 6.09583 16.6833 6.00417 16.6833C5.82083 16.6833 5.6375 16.5917 5.5 16.5C5.31667 16.3167 5.225 15.9958 5.3625 15.7208L8.57083 8.9375C8.61667 8.8 8.75417 8.6625 8.89167 8.61667L15.675 5.40833C15.95 5.27083 16.2708 5.31667 16.4542 5.54583C16.6833 5.72917 16.7292 6.05 16.5917 6.325ZM9.71667 9.71667L7.425 14.5292L12.2375 12.2375L9.71667 9.71667Z" fill="currentColor" />
-        </svg>
-    )
+function SvgExploreFill(props) {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 22 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11 0C4.95 0 0 4.95 0 11s4.95 11 11 11 11-4.95 11-11S17.05 0 11 0zm5.592 6.325l-3.209 6.783a.554.554 0 01-.32.321l-6.784 3.208c-.091.046-.183.046-.275.046-.183 0-.366-.091-.504-.183a.69.69 0 01-.138-.78l3.209-6.783a.554.554 0 01.32-.32l6.784-3.209c.275-.137.596-.091.78.138.228.183.274.504.137.779zM9.717 9.717l-2.292 4.812 4.813-2.291-2.521-2.521z"
+        fill="currentColor"
+      />
+    </svg>
+  );
 }
+
+export default SvgExploreFill;

@@ -1,9 +1,23 @@
-import React from 'react'
+import * as React from "react";
 
-export default function Posts({ size = "1em" }) {
-    return (
-        <svg fill="none" height={size} viewBox="0 0 48 48" width={size}>
-            <path clipRule="evenodd" d="M45 1.5H3c-.8 0-1.5.7-1.5 1.5v42c0 .8.7 1.5 1.5 1.5h42c.8 0 1.5-.7 1.5-1.5V3c0-.8-.7-1.5-1.5-1.5zm-40.5 3h11v11h-11v-11zm0 14h11v11h-11v-11zm11 25h-11v-11h11v11zm14 0h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11zm14 28h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11z" fillRule="evenodd" fill="currentColor"></path>
-        </svg>
-    )
+function SvgPosts(props) {
+  return (
+    <svg
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22.5.75h-21c-.4 0-.75.35-.75.75v21c0 .4.35.75.75.75h21c.4 0 .75-.35.75-.75v-21c0-.4-.35-.75-.75-.75zM2.25 2.25h5.5v5.5h-5.5v-5.5zm0 7h5.5v5.5h-5.5v-5.5zm5.5 12.5h-5.5v-5.5h5.5v5.5zm7 0h-5.5v-5.5h5.5v5.5zm0-7h-5.5v-5.5h5.5v5.5zm0-7h-5.5v-5.5h5.5v5.5zm7 14h-5.5v-5.5h5.5v5.5zm0-7h-5.5v-5.5h5.5v5.5zm0-7h-5.5v-5.5h5.5v5.5z"
+        fill="currentColor"
+      />
+    </svg>
+  );
 }
+
+export default SvgPosts;
