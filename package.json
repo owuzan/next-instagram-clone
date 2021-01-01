@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "svgtocomponent": "npx @svgr/cli -d icons svgs --icon --replace-attr-values #262626=currentColor"
   },
   "dependencies": {
     "next": "10.0.4",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "sass": "^1.32.0"
   }
 }
