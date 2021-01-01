@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import UserPost from '../UserPost'
 import React, { useState, useEffect } from 'react'
-import Sidebar from '../Sidebar'
+import AppSidebar from '../AppSidebar'
 import StoriesBar from '../StoriesBar'
 import styles from './styles.module.scss'
 
@@ -47,7 +47,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={styles.sidebar}>
-                    <Sidebar />
+                    <AppSidebar />
                 </div>
             </div>
         </>

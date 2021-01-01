@@ -3,7 +3,7 @@ import UserImage from '../UserImage'
 import SuggessionUser from '../SugessionUser'
 
 
-export default function Sidebar() {
+export default function AppSidebar() {
     return (
         <div className={styles.sidebarInner}>
             <div className={styles.changeBar}>
