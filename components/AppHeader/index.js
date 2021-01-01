@@ -7,7 +7,7 @@ import * as Icons from '../../icons'
 import Container from '../Container'
 import UserImage from '../UserImage'
 
-export default function Header() {
+export default function AppHeader() {
     const windowSize = useWindowSize()
     const ww = windowSize.width
     const router = useRouter.router
