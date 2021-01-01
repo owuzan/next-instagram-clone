@@ -1,4 +1,4 @@
-import UserImage from '../userImage'
+import UserImage from '../UserImage'
 import styles from './styles.module.scss'
 
 export default function SuggessionUser({ username = "owuzan", name = "Oğuzhan Yılmaz", src = "owuzan.jpg" }) {

@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-import UserImage from '../userImage'
+import UserImage from '../UserImage'
 import SuggessionUser from '../SugessionUser'
 
 

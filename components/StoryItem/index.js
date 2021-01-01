@@ -1,4 +1,4 @@
-import UserImage from '../userImage'
+import UserImage from '../UserImage'
 import styles from './styles.module.scss'
 
 export default function StoryItem({ username = "owuzan", src = "owuzan.jpg" }) {
