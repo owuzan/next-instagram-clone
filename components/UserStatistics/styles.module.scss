@@ -1,0 +1,46 @@
+.userStatistics {
+    margin-bottom: 20px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    @media (max-width: 734.98px) {
+        margin: 0;
+        justify-content: space-between;
+        max-width: 400px;
+        margin: 0 40px 0 0px;
+    }
+
+    li {
+        margin-right: 40px;
+        display: flex;
+
+        @media (max-width: 734.98px) {
+            flex-direction: column;
+            align-items: center;
+            margin-right: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        span {
+            @media (max-width: 734.98px) {
+                text-transform: capitalize;
+                font-size: 14px;
+            }
+
+            &.count {
+                font-weight: 500;
+                margin-right: 5px;
+                font-size: 16px;
+
+                @media (max-width: 734.98px) {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

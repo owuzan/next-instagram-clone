@@ -1,15 +1,9 @@
 import React, { useState } from 'react'
-import './style.scss'
-import Preferences from '../../icons/Preferences'
-import UserImage from '../user-image'
-import Like from '../../icons/Like'
-import LikeFill from '../../icons/LikeFill'
-import Comment from '../../icons/Comment'
-import Message from '../../icons/Message'
-import Bookmark from '../../icons/Bookmark'
-import BookmarkFill from '../../icons/BookmarkFill'
+import styles from  './styles.module.scss'
+import * as Icons from '../../icons'
+import UserImage from '../UserImage'
 
-export default function Post({ username = "owuzan", postLikeCount = 144, userSrc = "owuzan.jpg", postSrc = "photo-example.jpg", postDescription="Kahvesiz asla 🍹" }) {
+export default function Post({ username = "owuzan", postLikeCount = 144, userSrc = "/owuzan.jpg", postSrc = "photo-example.jpg", postDescription="Kahvesiz asla 🍹" }) {
     const [likeStatus, setLikeStatus] = useState(false);
     const [likeCount, setLikeCount] = useState(postLikeCount);
     const [saveStatus, setSaveStatus] = useState(false);
@@ -53,10 +47,10 @@ export default function Post({ username = "owuzan", postLikeCount = 144, userSrc
         }
     }
     const doubleClickHandle = (e) => {
-        if (!e.classList.contains('heart-aniamte')) {
+        if (!e.classList.contains(styles.heartAnimate)) {
             const time = new Date().getTime()
             if ((time - clickTime) < 500) {
-                e.classList.add('heart-animate')
+                e.classList.add(styles.heartAnimate)
                 if (!likeStatus) {
                     likePost()
                 }
@@ -64,67 +58,67 @@ export default function Post({ username = "owuzan", postLikeCount = 144, userSrc
             setClickTime(time)
             setTimeout(() => {
                 setClickTime(0)
-                e.classList.remove('heart-animate')
+                e.classList.remove(styles.heartAnimate)
             }, 1000)
         }
     }
 
     return (
-        <div className="post-wrapper">
-            <div className="post-inner">
+        <div className={styles.postWrapper}>
+            <div className={styles.postInner}>
                 <header>
-                    <div className="user-info">
-                        <UserImage size={32} src={userSrc} />
-                        <a href="#" className="user-name">{username}</a>
+                    <div className={styles.userInfo}>
+                        <UserImage type="story" style={{"font-size": "32px"}} />
+                        <a href="#" className={styles.userName}>{username}</a>
                     </div>
-                    <div className="post-preferences">
-                        <Preferences />
+                    <div className={styles.postPreferences}>
+                        <Icons.Preferences />
                     </div>
                 </header>
-                <div className="post-content">
-                    <div className="image-wrapper">
-                        <div onClick={(e) => doubleClickHandle(e.target)} className="heart">
-                            <LikeFill size={96} />
+                <div className={styles.postContent}>
+                    <div className={styles.imageWrapper}>
+                        <div onClick={(e) => doubleClickHandle(e.target)} className={styles.heart}>
+                            <Icons.LikeFill size={96} />
                         </div>
                         <img src={postSrc} alt="" />
                     </div>
-                    <div className="post-body">
-                        <div className="action-buttons">
+                    <div className={styles.postBody}>
+                        <div className={styles.actionButtons}>
                             <button
                                 onClick={() => likePost()}
-                                className={likeStatus ? "fillRed" : ""} >
+                                className={likeStatus ? styles.fillRed : ""} >
                                 {
                                     !likeStatus ?
-                                        <Like size={22} /> :
-                                        <LikeFill size={22} />
+                                        <Icons.Like size={22} /> :
+                                        <Icons.LikeFill size={22} />
                                 }
                             </button>
                             <button>
-                                <Comment size={22} />
+                                <Icons.Comment size={22} />
                             </button>
                             <button>
-                                <Message size={22} />
+                                <Icons.Message size={22} />
                             </button>
                             <button onClick={() => savePost()} style={{
                                 "marginLeft": "auto"
                             }}>
                                 {
                                     !saveStatus ?
-                                        <Bookmark size={22} /> :
-                                        <BookmarkFill size={22} />
+                                        <Icons.Bookmark size={22} /> :
+                                        <Icons.BookmarkFill size={22} />
                                 }
                             </button>
                         </div>
-                        <div className="post-info">
-                            <div className="like-count">
+                        <div className={styles.postInfo}>
+                            <div className={styles.likeCount}>
                                 {likeCount} beğenme
                             </div>
-                            <div className="post-description">
+                            <div className={styles.postDescription}>
                                 <a href="#">{username}</a>
                                 <span>{postDescription}</span>
                             </div>
-                            <ul className="comments-list">
-                                <li className="comments-count">6 yorumun tümünü gör</li>
+                            <ul className={styles.commentsList}>
+                                <li className={styles.commentsCount}>6 yorumun tümünü gör</li>
                                 <li>
                                     <span>
                                         <a href="#">erayeserbey</a>
@@ -139,14 +133,14 @@ export default function Post({ username = "owuzan", postLikeCount = 144, userSrc
                                         </li>
                                     )
                                 })}
-                                <li className="post-time">4 SAAT ÖNCE</li>
+                                <li className={styles.postTime}>4 SAAT ÖNCE</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <footer>
-                    <div className="comment-form">
-                        <div className="form-wrapper">
+                    <div className={styles.commentForm}>
+                        <div className={styles.formWrapper}>
                             <form>
                                 <input type="text" value={input} onChange={(e) => inputHandle(e.target.value)} placeholder="Yorum ekle..." required />
                                 {

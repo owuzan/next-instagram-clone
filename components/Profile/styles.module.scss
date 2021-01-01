@@ -1,0 +1,149 @@
+.profilePage {
+    padding: 30px 0;
+
+    header.profilePageHeader {
+        margin-bottom: 44px;
+        display: flex;
+        flex-wrap: wrap;
+
+        @media (max-width: 734.98px) {
+            margin-bottom: 0;
+        }
+
+        .profileImageWrapper {
+            display: flex;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 30px;
+            flex: 1;
+
+            @media (max-width: 734.98px) {
+                flex: 0;
+                margin: 0 15px;
+            }
+        }
+
+        .profileMetas {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width: 734.98px) {
+                justify-content: center;
+            }
+
+            .userHead {
+                display: flex;
+                margin-bottom: 20px;
+                align-items: center;
+
+                button {
+                    cursor: pointer;
+                    display: flex;
+                    background-color: transparent;
+                    outline: 0;
+                }
+
+                .usernameTitle {
+                    font-weight: 300;
+                    font-size: 28px;
+                }
+                .profileSettingsBtn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: inherit;
+                    border: 0;
+                    margin-left: 5px;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+        }
+    }
+
+    .userContents {
+        .userContentTabs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 52px;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 2px;
+            @media (max-width: 734.98px) {
+                position: sticky;
+                top: 0px;
+                z-index: 20;
+                background-color: var(--background-color);
+            }
+            @media (max-width: 599.98px) {
+                top: 53px;
+                background-color: var(--white);
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                margin-right: 60px;
+                text-decoration: none;
+                text-transform: uppercase;
+                font-weight: 600;
+                height: 100%;
+                color: var(--muted-text);
+                background-color: transparent;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+
+                @media (max-width: 734.98px) {
+                    flex: 1;
+                    justify-content: center;
+                }
+
+                &.activeTab {
+                    color: var(--text);
+                    position: relative;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        height: 1px;
+                        width: 100%;
+                        top: 0px;
+                        // transform: translateY(-1px);
+                        display: block;
+                        z-index: 1;
+                        background-color: var(--black);
+                        @media (max-width: 734.98px) {
+                            top: unset;
+                            bottom: 0;
+                            transform: unset;
+                        }
+                    }
+                }
+
+                span {
+                    display: flex;
+                    font-size: 12px;
+
+                    &.tab {
+                        margin-left: 6px;
+
+                        @media (max-width: 734.98px) {
+                            display: none;
+                        }
+                    }
+
+                    &.icon {
+                        @media (max-width: 734.98px) {
+                            font-size: 24px;
+                        }
+                    }
+                }
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

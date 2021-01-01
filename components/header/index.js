@@ -1,108 +1,135 @@
 import React from 'react'
-import { Link, Redirect, useLocation, useParams } from 'react-router-dom'
-import './style.scss'
-import Home from '../../icons/Home'
-import HomeFill from '../../icons/HomeFill'
-import Search from '../../icons/Search'
-import Message from '../../icons/Message'
-import MessageFill from '../../icons/MessageFill'
-import Explore from '../../icons/Explore'
-import Like from '../../icons/Like'
-import Camera from '../../icons/Camera'
-import AddPost from '../../icons/AddPost'
-import UserImage from '../user-image'
+import styles from './styles.module.scss'
 import useWindowSize from '../../hooks/useWindowSize'
-import { auth } from '../../firebase'
+import useRouter from 'next/router'
+import Link from 'next/link'
+import * as Icons from '../../icons'
+import Container from '../Container'
+import UserImage from '../UserImage'
 
 export default function Header() {
     const windowSize = useWindowSize()
     const ww = windowSize.width
-    const path = useLocation().pathname
+    const router = useRouter.router
+    const [route, setRoute] = React.useState("/")
+
+    React.useEffect(() => {
+        setRoute(router.route)
+        dropdown?.current?.classList?.remove(styles.show)
+    }, [router?.route])
 
     const dropdown = React.useRef(null)
     const handleProfileDropdown = (e) => {
-        console.log(dropdown.current.classList.toggle("show"))
-    }
-
-    const logout = (e) => {
-        auth.signOut()
-        return <Redirect to="/dashboard" />
+        dropdown?.current?.classList?.toggle(styles.show)
     }
 
     return (
-        <header className="header">
-            <div className="container">
-                <div className="header-inner">
-                    <div className="brand">
+        <header className={styles.header}>
+            <Container>
+                <div className={styles.headerInner}>
+                    <div className={styles.brand}>
                         {
                             ww < 600 ?
-                                <Link to="/">
-                                    <Camera size={28} />
+                                <Link href="/">
+                                    <a>
+                                        <Icons.Camera size={28} />
+                                        <style jsx>{`
+                                        font-size: 24px;
+                                        `}</style>
+                                    </a>
                                 </Link> : ""
                         }
-                        <Link to="/" className="brand-link">
-                            <img src="/instagram.png" alt="Instagram" />
+                        <Link href="/">
+                            <a>
+                                <img src="/instagram.png" alt="Instagram" />
+                            </a>
                         </Link>
                         {
                             ww < 600 ?
-                                <Link to="/messages">
-                                    {
-                                        path === '/messages' ?
-                                            <MessageFill size={28} /> :
-                                            <Message size={28} />
-                                    }
+                                <Link href="/direct/inbox">
+                                    <a>
+                                        {
+
+                                            route === '/direct/inbox' ?
+                                                <Icons.MessageFill size={28} /> :
+                                                <Icons.Message size={28} />
+                                        }
+                                        <style jsx>{`
+                                        font-size: 24px;
+                                        `}</style>
+                                    </a>
                                 </Link> : ""
                         }
                     </div>
                     {
                         ww >= 600 ?
-                            <div className="search-area">
+                            <div className={styles.searchArea}>
                                 <form method="GET">
                                     <input type="text" name="search" autoComplete="off" placeholder="Ara" />
                                 </form>
                             </div> : ""
                     }
-                    <div className={ww < 600 ? 'navbar mobile' : 'navbar'}>
+                    <div className={ww < 600 ? styles.navbar + " " + styles.mobile : styles.navbar}>
                         <nav>
-                            <Link to="/">
-                                {
-                                    path === '/' ?
-                                        <HomeFill /> :
-                                        <Home />
-                                }
+                            <Link href="/">
+                                <a>
+                                    {
+
+                                        route === '/' ?
+                                            <Icons.HomeFill /> :
+                                            <Icons.Home />
+                                    }
+                                </a>
                             </Link>
                             {
                                 ww < 600 ?
                                     <>
-                                        <Link to="/">
-                                            <Search />
+                                        <Link href="/?search">
+                                            <a>
+                                                <Icons.Search />
+                                            </a>
                                         </Link>
-                                        <Link to="/">
-                                            <AddPost />
+                                        <Link href="/?addPost">
+                                            <a>
+                                                <Icons.AddPost />
+                                            </a>
                                         </Link>
                                     </> :
                                     <>
-                                        <Link to="/messages">
-                                            {
-                                                path === '/messages' ?
-                                                    <MessageFill /> :
-                                                    <Message />
-                                            }
+                                        <Link href="/direct/inbox">
+                                            <a>
+                                                {
+
+                                                    route === "/direct/inbox" || route === "/direct/t/[id]" ?
+                                                        <Icons.MessageFill /> :
+                                                        <Icons.Message />
+                                                }
+                                            </a>
                                         </Link>
-                                        <Link to="/">
-                                            <Explore />
+                                        <Link href="/?explore">
+                                            <a>
+                                                <Icons.Explore />
+                                            </a>
                                         </Link>
                                     </>
                             }
 
-                            <Link to="/">
-                                <Like />
+                            <Link href="/?like">
+                                <a>
+                                    {
+                                        route === "/like" ?
+                                            <Icons.LikeFill /> :
+                                            <Icons.Like />
+                                    }
+                                </a>
                             </Link>
 
                             {
                                 ww < 600 ?
-                                    <Link to="/owuzan">
-                                        <UserImage status size={28} src="owuzan.jpg"  />
+                                    <Link href="/owuzan">
+                                        <a>
+                                            <UserImage type="story" />
+                                        </a>
                                     </Link> :
                                     <div
                                         onClick={(e) => handleProfileDropdown(e)}
@@ -110,15 +137,24 @@ export default function Header() {
                                             "cursor": "pointer"
                                         }}
                                     >
-                                        <UserImage size="24" src={"/owuzan.jpg"} status />
-                                        <div className="profile-dropdown" ref={dropdown}>
-                                            <Link to="/owuzan">
-                                                <div className="list-item-icon"><Explore /></div>
-                                                <span>Profil</span>
+                                        <UserImage type="story" />
+                                        <div className={styles.profileDropdown} ref={dropdown}>
+                                            <Link href="/owuzan">
+                                                <a>
+                                                    <div><Icons.User /></div>
+                                                    <span>Profil</span>
+                                                </a>
                                             </Link>
-                                            <Link onClick={() => logout()}>
-                                                <div className="list-item-icon"><Explore /></div>
-                                                <span>Çıkış Yap</span>
+                                            <Link href="/owuzan/saved">
+                                            <a>
+                                                <div><Icons.Bookmark /></div>
+                                                <span>Kaydedildi</span>
+                                            </a>
+                                            </Link>
+                                            <Link href="/">
+                                                <a className={styles.logoutLink}>
+                                                    <span>Çıkış Yap</span>
+                                                </a>
                                             </Link>
                                         </div>
                                     </div>
@@ -126,7 +162,7 @@ export default function Header() {
                         </nav>
                     </div>
                 </div>
-            </div>
+            </Container>
         </header>
     )
 }

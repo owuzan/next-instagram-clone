@@ -1,0 +1,15 @@
+.userProfileInfo {
+    @media (max-width: 734.98px) {
+        margin: 15px;
+    }
+    .userFullname {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .userBiography {
+        font-size: 14px;
+        line-height: 1.5;
+        // TODO gerçek veriler çekildiği zaman yazılacak.
+    }
+}

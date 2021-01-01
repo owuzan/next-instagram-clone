@@ -1,0 +1,174 @@
+header.header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    max-height: 54px;
+    height: 100%;
+    padding: 0 15px;
+    @media (max-width: 599.98px) {
+        // box-shadow: 0 10px 10px -10px rgba(0, 0, 0, .15);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+    }
+
+
+    .headerInner {
+        padding: 9px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-color);
+
+        a {
+            color: inherit;
+        }
+        .brand {
+            @media (min-width: 600px) {
+                max-width: 360px;
+            }
+            width: 100%;
+            height: inherit;
+            display: flex;
+            justify-content: space-between;
+
+            a {
+                padding-top: 7px;
+            }
+            img {
+                object-fit: contain;
+                height: 29px;
+                width: auto;
+                // transform: translateY(7px);
+            }
+        }
+        .searchArea {
+            input {
+                height: 28px;
+                width: 214px;
+                background-color: var(--input-background);
+                border: 1px solid var(--border-color);
+                border-radius: 3px;
+                outline: 0;
+                padding: 0 1rem;
+                color: inherit;
+
+                &::placeholder {
+                    color: var(--border-color);
+                    text-align: center;
+                }
+            }
+            @media (max-width: 999.98px) {
+                margin-right: 40px;
+            }
+            @media (max-width: 599.98px) {
+                display: none;
+            }
+        }
+        .navbar {
+            display: flex;
+            flex: 1;
+            justify-content: flex-end;
+            nav {
+                svg path {
+                    fill: var(--text);
+                }
+                display: flex;
+                margin-top: -22px;
+                margin-left: -22px;
+
+                & > a,
+                & > div {
+                    font-size: 1.5rem;
+                    margin-top: 22px;
+                    margin-left: 22px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                }
+
+                .profileDropdown {
+                    position: absolute;
+                    top: calc(100% + 15px);
+                    right: -10px;
+                    display: none;
+                    flex-direction: column;
+                    background-color: var(--white);
+                    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+                    width: 230px;
+                    border-radius: 5px;
+
+                    &.show {
+                        display: flex;
+                    }
+
+                    &::before {
+                        content: "";
+                        width: 15px;
+                        height: 15px;
+                        display: block;
+                        transform: rotate(45deg);
+                        background-color: var(--white);
+                        top: -7px;
+                        right: 15px;
+                        position: absolute;
+                        z-index: 0;
+                        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.15);
+                    }
+
+                    a {
+                        z-index: 1;
+                        padding: 8px 16px;
+                        font-size: 14px;
+                        display: flex;
+                        text-decoration: none;
+                        align-items: center;
+                        background-color: var(--white);
+
+                        &:first-child {
+                            border-radius: 5px 5px 0 0;
+                        }
+
+                        &:last-child {
+                            border-radius: 0 0 5px 5px;
+                        }
+
+                        &:hover {
+                            background-color: var(--background-color);
+                        }
+
+                        div {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+
+            &.mobile {
+                nav {
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    background-color: var(--white);
+                    border-top: 1px solid var(--border-color);
+                    justify-content: space-around;
+                    height: 50px;
+                    margin: 0;
+                    padding: 0;
+                    z-index: 1;
+
+                    a {
+                        margin: 0;
+                        flex: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+.logoutLink {
+    border-top: 2px solid var(--border-color);
+}

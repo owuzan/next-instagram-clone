@@ -1,0 +1,40 @@
+.homeLayout {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -14px;
+    margin-right: -14px;
+    margin-top: 30px;
+    justify-content: space-between;
+    @media (max-width: 599.98px) {
+        margin-top: 0;
+    }
+
+    .mainLayout {
+        flex: 1;
+        max-width: 642px;
+        padding-left: 14px;
+        padding-right: 14px;
+        width: 100%;
+    }
+
+    .sidebar {
+        padding-left: 14px;
+        padding-right: 14px;
+        width: 325px;
+    }
+
+    @media (max-width: 999.98px) {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        .mainLayout {
+            flex: 1;
+            max-width: 642px;
+            padding: 0;
+        }
+
+        .sidebar {
+            display: none;
+        }
+    }
+}

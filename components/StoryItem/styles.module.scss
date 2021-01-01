@@ -1,0 +1,16 @@
+.storyItem {
+    display: flex;
+    flex-direction: column;
+    margin-left: 14px;
+    display: flex;
+    color: var(--text);
+    font-size: 12px;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 6px;
+
+    p {
+        margin-top: 3px;
+    }
+}

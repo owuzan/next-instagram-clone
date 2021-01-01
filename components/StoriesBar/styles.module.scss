@@ -1,0 +1,20 @@
+.storiesBar {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    @media (max-width: 599.98px) {
+        border: 0;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 0;
+    }
+
+    .storiesInner {
+        .stories {
+            padding: 16px 4px;
+            list-style-type: none;
+            display: flex;
+        }
+    }
+}

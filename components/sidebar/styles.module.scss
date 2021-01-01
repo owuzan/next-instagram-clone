@@ -1,0 +1,114 @@
+.sidebarInner {
+    position: sticky;
+    top: 0px;
+}
+
+.changeBar {
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text);
+
+    .userMeta {
+        width: 141px;
+        display: flex;
+        flex-direction: column;
+        p {
+            margin: 0;
+            font-weight: 500;
+        }
+        span {
+            color: var(--muted-text);
+        }
+    }
+
+    button {
+        all: unset;
+        cursor: pointer;
+        color: var(--blue);
+        font-weight: 500;
+        font-size: 12px;
+    }
+}
+
+.suggested {
+    margin-top: 12px;
+
+    .suggestedHeader {
+        padding-top: 12px;
+        font-weight: 500;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+            color: var(--muted-text);
+            font-size: 14px;
+        }
+
+        button {
+            all: unset;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 500;
+        }
+    }
+
+    ul {
+        margin: 0;
+        margin-top: 8px;
+        padding: 8px 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 2px 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            button {
+                all: unset;
+                cursor: pointer;
+                color: var(--blue);
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.instagramFooter {
+    margin-top: 25px;
+    font-size: 11px;
+    color: #c7c7c7;
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+            &::after {
+                content: "\00B7";
+                margin: 0 0.25em 0 0.25em;
+            }
+        }
+    }
+
+    .footerText {
+        text-transform: uppercase;
+        margin-top: 20px;
+    }
+}
