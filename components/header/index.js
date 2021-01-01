@@ -146,10 +146,10 @@ export default function Header() {
                                                 </a>
                                             </Link>
                                             <Link href="/owuzan/saved">
-                                            <a>
-                                                <div><Icons.Bookmark /></div>
-                                                <span>Kaydedildi</span>
-                                            </a>
+                                                <a>
+                                                    <div><Icons.Bookmark /></div>
+                                                    <span>Kaydedildi</span>
+                                                </a>
                                             </Link>
                                             <Link href="/">
                                                 <a className={styles.logoutLink}>
