@@ -128,7 +128,7 @@ export default function AppHeader() {
                                 ww < 600 ?
                                     <Link href="/owuzan">
                                         <a>
-                                            <UserImage type="story" />
+                                            <UserImage type="story" size={22} />
                                         </a>
                                     </Link> :
                                     <div
@@ -137,7 +137,7 @@ export default function AppHeader() {
                                             "cursor": "pointer"
                                         }}
                                     >
-                                        <UserImage type="story" />
+                                        <UserImage type="story" size={22} />
                                         <div className={styles.profileDropdown} ref={dropdown}>
                                             <Link href="/owuzan">
                                                 <a>

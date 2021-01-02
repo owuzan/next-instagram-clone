@@ -2,25 +2,21 @@ import Link from 'next/link'
 
 export default function linkedText(text) {
     // FIXME En sonra link eklendiği zaman başka karakter olmazsa çalışmıyor.
-    
+
     const words = text.split(" ")
     let list = words.map((word, index) => {
         if (word.slice(0, 1) === '@') {
             return (
-                <>
-                    <Link key={index} href={`/${word.slice(1)}`}>
-                        <a>{word}</a>
-                    </Link>
-                </>
+                <Link key={index} href={`/${word.slice(1)}`}>
+                    <a>{word}</a>
+                </Link>
             )
         }
         if (word.slice(0, 1) === '#') {
             return (
-                <>
-                    <Link key={index} href={`/hashtag/${word.slice(1)}`}>
-                        <a>{word}</a>
-                    </Link>
-                </>
+                <Link key={index} href={`/hashtag/${word.slice(1)}`}>
+                    <a>{word}</a>
+                </Link>
             )
         }
         return word

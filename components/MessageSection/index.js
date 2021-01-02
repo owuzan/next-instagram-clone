@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 
 export default function MessageSection(
     {
-        src = "owuzan.jpg",
+        src = "/owuzan.jpg",
         me = false,
         list = [
             {

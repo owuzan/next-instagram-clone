@@ -68,7 +68,7 @@ export default function UserPost({ username = "owuzan", postLikeCount = 144, use
             <div className={styles.postInner}>
                 <header>
                     <div className={styles.userInfo}>
-                        <UserImage type="story" style={{"font-size": "32px"}} />
+                        <UserImage type="story" size={32} />
                         <a href="#" className={styles.userName}>{username}</a>
                     </div>
                     <div className={styles.postPreferences}>

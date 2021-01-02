@@ -33,7 +33,7 @@ export default function Profile({ username = "owuzan" }) {
                                 <h2 className={styles.usernameTitle}>owuzan</h2>
                                 <EditProfileBtn />
                                 <button className={styles.profileSettingsBtn}>
-                                    <Icons.Options style={{ "fontSize": "24px" }} />
+                                    <Icons.Options style={{ fontSize: "24px" }} />
                                 </button>
                             </div> : ""
                     }

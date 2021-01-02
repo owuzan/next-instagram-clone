@@ -73,7 +73,7 @@ export default function Messages() {
                             owuzan
                         </div>
                         <div className={styles.newMessageIcon}>
-                            <NewMessage />
+                            <NewMessage style={{fontSize: "24"}} />
                         </div>
                     </div>
                     <ContactList
