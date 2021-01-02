@@ -1,0 +1,30 @@
+.contactListWrapper {
+    flex: 1;
+    padding: 8px 0 0 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .contactList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .contact {
+            &:hover {
+                background-color: var(--background-color);
+                cursor: pointer;
+            }
+            &.activeContact {
+                background-color: var(--border-light-color);
+            }
+        }
+
+        a {
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            overflow: hidden;
+        }
+    }
+}

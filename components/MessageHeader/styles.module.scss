@@ -1,0 +1,26 @@
+.messageContentHeader {
+    height: 60px;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+
+    .contactInfo {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        height: 100%;
+
+        .contactUsername {
+            margin-left: 12px;
+            font-weight: 600;
+        }
+    }
+
+    .userInfoButton {
+        all: unset;
+        align-self: center;
+        cursor: pointer;
+        display: flex;
+    }
+}

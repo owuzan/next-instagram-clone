@@ -1,0 +1,61 @@
+.messagesPage {
+    height: calc(100vh - 54px);
+    padding: 20px 0;
+    @media (max-width: 934.98px) {
+        padding: 0;
+    }
+    @media (max-width: 599.98px) {
+        height: calc(100vh - 100px);
+    }
+
+    .messagesWrapper {
+        display: flex;
+        border: 1px solid var(--border-color);
+        border-radius: 3px;
+        height: 100%;
+        background-color: var(--white);
+        @media (max-width: 934.98px) {
+            border: 0;
+        }
+
+        .messagesSidebar {
+            width: 350px;
+            border-right: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            @media(max-width: 599.98px) {
+                width: 100%;
+            }
+
+            .sidebarHeader {
+                width: 100%;
+                height: 60px;
+                border-bottom: 1px solid var(--border-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 20px;
+
+                div {
+                    display: flex;
+                }
+
+                .sidebarTop {
+                    font-weight: 500;
+                }
+
+                .newMessageIcon {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .messageContent {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+    }
+}

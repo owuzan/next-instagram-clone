@@ -1,6 +1,8 @@
 import Link from 'next/link'
 
 export default function linkedText(text) {
+    // FIXME En sonra link eklendiği zaman başka karakter olmazsa çalışmıyor.
+    
     const words = text.split(" ")
     let list = words.map((word, index) => {
         if (word.slice(0, 1) === '@') {
@@ -33,7 +35,7 @@ export default function linkedText(text) {
             temp = []
             itemType = 'object'
         } else {
-            if(index == 0) {
+            if (index == 0) {
                 temp.push(item)
             } else {
                 temp.push(" " + item)

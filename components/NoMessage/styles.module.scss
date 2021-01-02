@@ -1,0 +1,56 @@
+.noMessageWrapper {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    .noMessage {
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+
+        .messageIcon {
+            margin-left: auto;
+            margin-right: auto;
+            border: 3px solid var(--text);
+            font-size: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+        }
+        .pageTitle {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 400;
+            margin-top: 28px;
+        }
+        .pageDescription {
+            color: var(--muted-text);
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .noMeesageFooter {
+            text-align: center;
+            button {
+                background-color: var(--blue);
+                border: 0;
+                outline: 0;
+                padding: 5px 9px;
+                border-radius: 4px;
+                color: var(--button-text);
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 1.5;
+                display: inline-block;
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.messageListUserImage {
+    margin-right: 12px;
+}
+
+.messageListUserMeta {
+    font-size: 14px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+
+    span {
+        color: var(--text);
+    }
+    p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--muted-text);
+    }
+}
