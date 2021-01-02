@@ -3,7 +3,7 @@ import styles from  './styles.module.scss'
 import * as Icons from '../../icons'
 import UserImage from '../UserImage'
 
-export default function UserPost({ username = "owuzan", postLikeCount = 144, userSrc = "/owuzan.jpg", postSrc = "photo-example.jpg", postDescription="Kahvesiz asla 🍹" }) {
+export default function UserPost({ username = "owuzan", postLikeCount = 144, userSrc = "/owuzan.jpg", postSrc = "/photo-example.jpg", postDescription="Kahvesiz asla 🍹" }) {
     const [likeStatus, setLikeStatus] = useState(false);
     const [likeCount, setLikeCount] = useState(postLikeCount);
     const [saveStatus, setSaveStatus] = useState(false);

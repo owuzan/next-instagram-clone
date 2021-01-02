@@ -29,8 +29,8 @@ export default function Home() {
                                 <UserPost />
                                 <UserPost
                                     username={"suleyman"}
-                                    userSrc={"suleyman.jpg"}
-                                    postSrc={"suleyman-example.jpg"}
+                                    userSrc={"/suleyman.jpg"}
+                                    postSrc={"/suleyman-example.jpg"}
                                     postDescription={"Uğraştırma"} />
                             </>
                         }

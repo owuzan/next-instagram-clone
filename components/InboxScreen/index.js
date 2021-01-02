@@ -73,9 +73,11 @@ export default function Messages() {
                             owuzan
                         </div>
                         <div className={styles.newMessageIcon}>
-                            <NewMessage style={{fontSize: "24"}} />
+                            <NewMessage style={{ fontSize: "24" }} />
                         </div>
                     </div>
+                    {/* FIXME activeContact state düzgün çalışmıyor. */}
+                    {/* FIXME NoMessage componentinin genişlik ayarı yapılacak */}
                     <ContactList
                         activeContact={activeContact}
                         setActiveContact={setActiveContact}
