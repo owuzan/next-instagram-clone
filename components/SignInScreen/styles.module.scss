@@ -1,0 +1,201 @@
+.signInPage {
+    // display: flex;
+    padding-top: 45px;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 735px) {
+        padding-top: 30px;
+    }
+
+    .mockups {
+        display: none;
+    }
+
+    .signUpWrapper {
+        width: 100%;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+
+        form {
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            text-align: center;
+            background-color: var(--white);
+
+            @media (max-width: 735px) {
+                border: none;
+            }
+
+            .brand {
+                display: flex;
+                justify-content: center;
+                margin: 22px auto 12px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-width: 175px;
+                    max-height: 51px;
+                    object-fit: contain;
+                }
+            }
+            .field {
+                margin: 0 40px 6px 40px;
+                position: relative;
+
+                input {
+                    border: 1px solid var(--border-color);
+                    padding: 9px 0 7px 8px;
+                    width: 100%;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    background-color: var(--input-background);
+                    outline: 0;
+                }
+                .loginBtn {
+                    width: 100%;
+                    padding: 5px 9px;
+                    background-color: var(--blue);
+                    outline: 0;
+                    border: 1px solid var(--blue);
+                    border-radius: 3px;
+                    color: var(--white);
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+
+                .showOrHide {
+                    appearance: none;
+                    background-color: transparent;
+                    border: 0;
+                    cursor: pointer;
+                    font-weight: 500;
+                    outline: 0;
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+
+            .horizantalLine {
+                text-transform: uppercase;
+                height: 30px;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--muted-text);
+                position: relative;
+                margin: 10px 40px;
+
+                .line {
+                    height: 1.5px;
+                    width: 100%;
+                    left: 0;
+                    position: absolute;
+                    background-color: var(--muted-text);
+                    top: 50%;
+                    opacity: 0.3;
+                    transform: translateY(-50%);
+                    z-index: 0;
+                }
+
+                .text {
+                    position: absolute;
+                    z-index: 1;
+                    background-color: white;
+                    left: 50%;
+                    top: 50%;
+                    padding: 0 15px;
+                    transform: translateY(-50%) translateX(-50%);
+                }
+            }
+
+            .facebookLogin {
+                margin: 15px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                    width: 15px;
+                    height: 15px;
+                    margin-right: 5px;
+                }
+                a {
+                    text-decoration: none;
+                    font-weight: 500;
+                    color: #385185;
+                    font-size: 14px;
+                }
+            }
+            .forgotPassword {
+                font-size: 12px;
+                margin-bottom: 15px;
+                a {
+                    text-decoration: none;
+                    font-size: 12px;
+                    color: var(--text-color);
+                }
+            }
+        }
+
+        .notHaveAccounts {
+            width: 100%;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            text-align: center;
+            background-color: var(--white);
+            margin-top: 10px;
+            padding: 20px 0;
+            font-size: 14px;
+
+            @media (max-width: 735px) {
+                border: none;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--blue);
+                font-weight: 500;
+            }
+        }
+    }
+
+    .signUpFooter {
+        margin-top: 40px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        a {
+            color: var(--muted-text);
+            text-decoration: none;
+            font-size: 12px;
+            white-space: nowrap;
+            margin-right: 15px;
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .footerText {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted-text);
+            margin-top: 20px;
+        }
+    }
+}
