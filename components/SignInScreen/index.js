@@ -8,8 +8,8 @@ export default function SignInScreen() {
     const auth = useAuth()
     const refPassword = React.useRef()
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
+    const [password, setPassword] = useState('12345678')
     const handlePasswordInputType = (e) => {
         e.preventDefault()
         if (refPassword.current.type === 'password') {
@@ -45,14 +45,16 @@ export default function SignInScreen() {
                             type="text"
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="E-posta"
+                            value={email}
                         />
                     </div>
                     <div className={styles.field}>
                         <input
                             type="password"
-                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="Şifre"
                             ref={refPassword}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <button
                             onClick={(e) => handlePasswordInputType(e)}

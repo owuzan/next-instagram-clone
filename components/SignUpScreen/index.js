@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
+import { createUser } from '../../lib/db'
 
 export default function SignUpScreen() {
     const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
     const [fullName, setFullName] = useState('Oğuzhan Yılmaz')
     const [username, setUsername] = useState('owuzan')
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('12345678')
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
+        createUser(email, password)
 
         // db.collection("users").where("username", "==", username)
         //     .get()
@@ -42,7 +44,7 @@ export default function SignUpScreen() {
         <div className={styles.container}>
             <div className={styles.signUpPage}>
                 <div className={styles.signUpWrapper}>
-                    <form onSubmit={(e) => handleSubmitForm(e)}>
+                    <form>
                         <div className={styles.brand}>
                             <Link href="/">
                                 <a>
@@ -91,6 +93,7 @@ export default function SignUpScreen() {
                             <input
                                 type="password"
                                 placeholder="Şifre"
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
