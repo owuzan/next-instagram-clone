@@ -1,12 +1,12 @@
 import HomeLayout from '../components/HomeLayout'
 import SignInScreen from '../components/SignInScreen'
 import { useAuth } from '../lib/auth'
+import Loader from '../components/Loader'
+
 export default function Home() {
-    const { user, signout, loading } = useAuth()
-    console.log('User:', user)
-    console.log(loading)
+    const { user, loading } = useAuth()
     if (loading) {
-        return <></>
+        return <Loader />
     }
     return <>{user ? <HomeLayout /> : <SignInScreen />}</>
 }

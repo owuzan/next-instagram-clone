@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import { createUser } from '../../lib/db'
+import { signUp, usernameExist } from '../../lib/db'
 
 export default function SignUpScreen() {
     const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
@@ -11,7 +11,7 @@ export default function SignUpScreen() {
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        createUser(email, password)
+        signUp(email, password, username, fullName)
 
         // db.collection("users").where("username", "==", username)
         //     .get()

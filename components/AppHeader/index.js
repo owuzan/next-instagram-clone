@@ -30,6 +30,7 @@ export default function AppHeader() {
     }
 
     if (user) {
+        console.log(user)
         return (
             <header className={styles.header}>
                 <Container>

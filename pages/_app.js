@@ -2,7 +2,7 @@ import '../styles/globals.scss'
 import AppHeader from '../components/AppHeader'
 import Head from 'next/head'
 import Container from '../components/Container'
-import { AuthProvider, useAuth } from '../lib/auth'
+import { AuthProvider } from '../lib/auth'
 export default function Instagram({ Component, pageProps }) {
     return (
         <AuthProvider>
