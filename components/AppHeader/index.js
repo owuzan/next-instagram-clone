@@ -6,12 +6,18 @@ import Link from 'next/link'
 import * as Icons from '../../icons'
 import Container from '../Container'
 import UserImage from '../UserImage'
+import { useAuth } from '../../lib/auth'
 
 export default function AppHeader() {
     const windowSize = useWindowSize()
     const ww = windowSize.width
     const router = useRouter.router
-    const [route, setRoute] = React.useState("/")
+    const [route, setRoute] = React.useState('/')
+    const { user, signout } = useAuth()
+    const signOutHandle = (e) => {
+        e.preventDefault()
+        signout()
+    }
 
     React.useEffect(() => {
         setRoute(router.route)
@@ -23,66 +29,78 @@ export default function AppHeader() {
         dropdown?.current?.classList?.toggle(styles.show)
     }
 
-    return (
-        <header className={styles.header}>
-            <Container>
-                <div className={styles.headerInner}>
-                    <div className={styles.brand}>
-                        {
-                            ww < 600 ?
+    if (user) {
+        return (
+            <header className={styles.header}>
+                <Container>
+                    <div className={styles.headerInner}>
+                        <div className={styles.brand}>
+                            {ww < 600 ? (
                                 <Link href="/">
                                     <a>
                                         <Icons.Camera size={28} />
                                         <style jsx>{`
-                                        font-size: 24px;
+                                            font-size: 24px;
                                         `}</style>
                                     </a>
-                                </Link> : ""
-                        }
-                        <Link href="/">
-                            <a>
-                                <img src="/instagram.png" alt="Instagram" />
-                            </a>
-                        </Link>
-                        {
-                            ww < 600 ?
-                                <Link href="/direct/inbox">
-                                    <a>
-                                        {
-
-                                            route === '/direct/inbox' ?
-                                                <Icons.MessageFill size={28} /> :
-                                                <Icons.Message size={28} />
-                                        }
-                                        <style jsx>{`
-                                        font-size: 24px;
-                                        `}</style>
-                                    </a>
-                                </Link> : ""
-                        }
-                    </div>
-                    {
-                        ww >= 600 ?
-                            <div className={styles.searchArea}>
-                                <form method="GET">
-                                    <input type="text" name="search" autoComplete="off" placeholder="Ara" />
-                                </form>
-                            </div> : ""
-                    }
-                    <div className={ww < 600 ? styles.navbar + " " + styles.mobile : styles.navbar}>
-                        <nav>
+                                </Link>
+                            ) : (
+                                ''
+                            )}
                             <Link href="/">
                                 <a>
-                                    {
-
-                                        route === '/' ?
-                                            <Icons.HomeFill /> :
-                                            <Icons.Home />
-                                    }
+                                    <img src="/instagram.png" alt="Instagram" />
                                 </a>
                             </Link>
-                            {
-                                ww < 600 ?
+                            {ww < 600 ? (
+                                <Link href="/direct/inbox">
+                                    <a>
+                                        {route === '/direct/inbox' ? (
+                                            <Icons.MessageFill size={28} />
+                                        ) : (
+                                            <Icons.Message size={28} />
+                                        )}
+                                        <style jsx>{`
+                                            font-size: 24px;
+                                        `}</style>
+                                    </a>
+                                </Link>
+                            ) : (
+                                ''
+                            )}
+                        </div>
+                        {ww >= 600 ? (
+                            <div className={styles.searchArea}>
+                                <form method="GET">
+                                    <input
+                                        type="text"
+                                        name="search"
+                                        autoComplete="off"
+                                        placeholder="Ara"
+                                    />
+                                </form>
+                            </div>
+                        ) : (
+                            ''
+                        )}
+                        <div
+                            className={
+                                ww < 600
+                                    ? styles.navbar + ' ' + styles.mobile
+                                    : styles.navbar
+                            }
+                        >
+                            <nav>
+                                <Link href="/">
+                                    <a>
+                                        {route === '/' ? (
+                                            <Icons.HomeFill />
+                                        ) : (
+                                            <Icons.Home />
+                                        )}
+                                    </a>
+                                </Link>
+                                {ww < 600 ? (
                                     <>
                                         <Link href="/?search">
                                             <a>
@@ -94,16 +112,17 @@ export default function AppHeader() {
                                                 <Icons.AddPost />
                                             </a>
                                         </Link>
-                                    </> :
+                                    </>
+                                ) : (
                                     <>
                                         <Link href="/direct/inbox">
                                             <a>
-                                                {
-
-                                                    route === "/direct/inbox" || route === "/direct/t/[id]" ?
-                                                        <Icons.MessageFill /> :
-                                                        <Icons.Message />
-                                                }
+                                                {route === '/direct/inbox' ||
+                                                route === '/direct/t/[id]' ? (
+                                                    <Icons.MessageFill />
+                                                ) : (
+                                                    <Icons.Message />
+                                                )}
                                             </a>
                                         </Link>
                                         <Link href="/?explore">
@@ -112,57 +131,76 @@ export default function AppHeader() {
                                             </a>
                                         </Link>
                                     </>
-                            }
+                                )}
 
-                            <Link href="/?like">
-                                <a>
-                                    {
-                                        route === "/like" ?
-                                            <Icons.LikeFill /> :
+                                <Link href="/?like">
+                                    <a>
+                                        {route === '/like' ? (
+                                            <Icons.LikeFill />
+                                        ) : (
                                             <Icons.Like />
-                                    }
-                                </a>
-                            </Link>
+                                        )}
+                                    </a>
+                                </Link>
 
-                            {
-                                ww < 600 ?
+                                {ww < 600 ? (
                                     <Link href="/owuzan">
                                         <a>
                                             <UserImage type="story" size={22} />
                                         </a>
-                                    </Link> :
+                                    </Link>
+                                ) : (
                                     <div
-                                        onClick={(e) => handleProfileDropdown(e)}
+                                        onClick={(e) =>
+                                            handleProfileDropdown(e)
+                                        }
                                         style={{
-                                            "cursor": "pointer"
+                                            cursor: 'pointer',
                                         }}
                                     >
                                         <UserImage type="story" size={22} />
-                                        <div className={styles.profileDropdown} ref={dropdown}>
+                                        <div
+                                            className={styles.profileDropdown}
+                                            ref={dropdown}
+                                        >
                                             <Link href="/owuzan">
                                                 <a>
-                                                    <div><Icons.User /></div>
+                                                    <div>
+                                                        <Icons.User />
+                                                    </div>
                                                     <span>Profil</span>
                                                 </a>
                                             </Link>
                                             <Link href="/owuzan/saved">
-                                            <a>
-                                                <div><Icons.Bookmark /></div>
-                                                <span>Kaydedildi</span>
-                                            </a>
+                                                <a>
+                                                    <div>
+                                                        <Icons.Bookmark />
+                                                    </div>
+                                                    <span>Kaydedildi</span>
+                                                </a>
                                             </Link>
                                             <Link href="/">
-                                                <a className={styles.logoutLink}>
+                                                <a
+                                                    className={
+                                                        styles.logoutLink
+                                                    }
+                                                    onClick={(e) =>
+                                                        signOutHandle(e)
+                                                    }
+                                                >
                                                     <span>Çıkış Yap</span>
                                                 </a>
                                             </Link>
                                         </div>
                                     </div>
-                            }
-                        </nav>
+                                )}
+                            </nav>
+                        </div>
                     </div>
-                </div>
-            </Container>
-        </header>
-    )
+                </Container>
+            </header>
+        )
+    } else {
+        return <></>
+    }
 }

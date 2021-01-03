@@ -1,29 +1,29 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
-
 import Link from 'next/link'
+// import { auth } from 'firebase'
+import { useAuth } from '../../lib/auth'
 
 export default function SignInScreen() {
-
+    const auth = useAuth()
     const refPassword = React.useRef()
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const handlePasswordInputType = (e) => {
         e.preventDefault()
-        if (refPassword.current.type === "password") {
-            refPassword.current.type = "text"
-            e.target.innerText = "Gizle"
+        if (refPassword.current.type === 'password') {
+            refPassword.current.type = 'text'
+            e.target.innerText = 'Gizle'
         } else {
-            refPassword.current.type = "password"
-            e.target.innerText = "Göster"
+            refPassword.current.type = 'password'
+            e.target.innerText = 'Göster'
         }
     }
 
     const handleSignIn = (e) => {
         e.preventDefault()
+        auth.signIn(email, password)
     }
 
     return (
@@ -32,7 +32,7 @@ export default function SignInScreen() {
                 <img src="/sign-up.png" alt="" />
             </div>
             <div className={styles.signUpWrapper}>
-                <form>
+                <form className={styles.section}>
                     <div className={styles.brand}>
                         <Link href="/">
                             <a>
@@ -41,14 +41,33 @@ export default function SignInScreen() {
                         </Link>
                     </div>
                     <div className={styles.field}>
-                        <input type="text" onChange={(e) => setEmail(e.target.value)} placeholder="E-posta" />
+                        <input
+                            type="text"
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="E-posta"
+                        />
                     </div>
                     <div className={styles.field}>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Şifre" ref={refPassword} />
-                        <button onClick={(e) => handlePasswordInputType(e)} className={styles.showOrHide}>Göster</button>
+                        <input
+                            type="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Şifre"
+                            ref={refPassword}
+                        />
+                        <button
+                            onClick={(e) => handlePasswordInputType(e)}
+                            className={styles.showOrHide}
+                        >
+                            Göster
+                        </button>
                     </div>
                     <div className={styles.field}>
-                        <button onClick={(e) => handleSignIn(e)} className={styles.loginBtn}>Giriş Yap</button>
+                        <button
+                            onClick={(e) => handleSignIn(e)}
+                            className={styles.loginBtn}
+                        >
+                            Giriş Yap
+                        </button>
                     </div>
                     <div className={styles.horizantalLine}>
                         <div className={styles.text}>ya da</div>
@@ -62,9 +81,14 @@ export default function SignInScreen() {
                         <a href="#">Şifreni mi unuttun?</a>
                     </div>
                 </form>
-                {/* <div className={styles.notHaveAccounts}>
-                    <span>Hesabın yok mu? <Link href="/accounts/emailsignup"><a>Kaydol</a></Link></span>
-                </div> */}
+                <div className={styles.notHaveAccounts}>
+                    <span>
+                        {'Hesabın yok mu? '}
+                        <Link href="/accounts/emailsignup">
+                            <a>Kaydol</a>
+                        </Link>
+                    </span>
+                </div>
             </div>
             <div className="container">
                 <footer className={styles.signUpFooter}>
@@ -85,8 +109,11 @@ export default function SignInScreen() {
                     <a href="#">Ev ve Bahçe</a>
                     <a href="#">Müzik</a>
                     <a href="#">Görsel Sanatlar</a>
-                    <p className={styles.footerText}>&copy; 2020 Instagram from Facebook</p>
+                    <p className={styles.footerText}>
+                        &copy; 2020 Instagram from Facebook
+                    </p>
                 </footer>
+                {auth?.user?.uid}
             </div>
         </div>
     )

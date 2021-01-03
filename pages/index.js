@@ -1,13 +1,8 @@
 import HomeLayout from '../components/HomeLayout'
 import SignInScreen from '../components/SignInScreen'
-import SignUpScreen from '../components/SignUpScreen'
-
+import { useAuth } from '../lib/auth'
 export default function Home() {
-    return (
-        <>
-            {/* <HomeLayout /> */}
-            {/* <SignInScreen /> */}
-            <SignUpScreen />
-        </>
-    )
+    const { user, signout, loading } = useAuth()
+
+    return <>{user ? <HomeLayout /> : <SignInScreen />}</>
 }
