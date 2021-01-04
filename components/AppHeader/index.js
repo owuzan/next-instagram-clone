@@ -6,14 +6,20 @@ import Link from 'next/link'
 import * as Icons from '../../icons'
 import Container from '../Container'
 import UserImage from '../UserImage'
-import { useAuth } from '../../lib/auth'
 
+import { getCurrentUserData } from '../../lib/db'
+import { useAuth } from '../../lib/auth'
 export default function AppHeader() {
+    const { user, signout } = useAuth()
+    const [userData, setUserData] = React.useState('')
+    React.useEffect(async () => {
+        setUserData(await getCurrentUserData(await user?.id))
+    }, [user])
+
     const windowSize = useWindowSize()
     const ww = windowSize.width
     const router = useRouter.router
     const [route, setRoute] = React.useState('/')
-    const { user, signout } = useAuth()
     const signOutHandle = (e) => {
         e.preventDefault()
         signout()
@@ -30,7 +36,6 @@ export default function AppHeader() {
     }
 
     if (user) {
-        console.log(user)
         return (
             <header className={styles.header}>
                 <Container>
@@ -145,9 +150,9 @@ export default function AppHeader() {
                                 </Link>
 
                                 {ww < 600 ? (
-                                    <Link href="/owuzan">
+                                    <Link href={`/${userData.username}`}>
                                         <a>
-                                            <UserImage type="story" size={22} />
+                                            <UserImage size={22} />
                                         </a>
                                     </Link>
                                 ) : (
@@ -159,12 +164,14 @@ export default function AppHeader() {
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <UserImage type="story" size={22} />
+                                        <UserImage size={22} />
                                         <div
                                             className={styles.profileDropdown}
                                             ref={dropdown}
                                         >
-                                            <Link href="/owuzan">
+                                            <Link
+                                                href={`/${userData.username}`}
+                                            >
                                                 <a>
                                                     <div>
                                                         <Icons.User />
@@ -172,7 +179,9 @@ export default function AppHeader() {
                                                     <span>Profil</span>
                                                 </a>
                                             </Link>
-                                            <Link href="/owuzan/saved">
+                                            <Link
+                                                href={`/${userData.username}/saved`}
+                                            >
                                                 <a>
                                                     <div>
                                                         <Icons.Bookmark />

@@ -1,16 +1,24 @@
 import styles from './styles.module.scss'
 import UserImage from '../UserImage'
 import SuggessionUser from '../SugessionUser'
-
+import { getCurrentUserData } from '../../lib/db'
+import { useAuth } from '../../lib/auth'
+import React from 'react'
 
 export default function AppSidebar() {
+    const { user } = useAuth()
+    const [userData, setUserData] = React.useState('')
+
+    React.useEffect(async () => {
+        setUserData(await getCurrentUserData(await user?.id))
+    }, [user])
     return (
         <div className={styles.sidebarInner}>
             <div className={styles.changeBar}>
                 <UserImage type="story" size={56} />
                 <div className={styles.userMeta}>
-                    <p>owuzan</p>
-                    <span>Oğuzhan Yılmaz</span>
+                    <p>{userData.username}</p>
+                    <span>{userData.name}</span>
                 </div>
                 <button>Geçiş Yap</button>
             </div>
@@ -21,19 +29,39 @@ export default function AppSidebar() {
                 </div>
                 <ul>
                     <li>
-                        <SuggessionUser username={"elonmusk"} name={"Elon Musk"} src={"/elon.jpg"} />
+                        <SuggessionUser
+                            username={'elonmusk'}
+                            name={'Elon Musk'}
+                            src={'/elon.jpg'}
+                        />
                     </li>
                     <li>
-                        <SuggessionUser username={"ivanasert"} name={"Ivana"} src={"/ivana.jpg"} />
+                        <SuggessionUser
+                            username={'ivanasert'}
+                            name={'Ivana'}
+                            src={'/ivana.jpg'}
+                        />
                     </li>
                     <li>
-                        <SuggessionUser username={"mserdark"} name={"M. Serdar Kuzuloglu"} src={"/serdar.jpg"} />
+                        <SuggessionUser
+                            username={'mserdark'}
+                            name={'M. Serdar Kuzuloglu'}
+                            src={'/serdar.jpg'}
+                        />
                     </li>
                     <li>
-                        <SuggessionUser username={"thisisbillgates"} name={"Bill Gates"} src={"/bill.jpg"} />
+                        <SuggessionUser
+                            username={'thisisbillgates'}
+                            name={'Bill Gates'}
+                            src={'/bill.jpg'}
+                        />
                     </li>
                     <li>
-                        <SuggessionUser username={"betulhoca"} name={"Betül Ay"} src={"/betul.jpg"} />
+                        <SuggessionUser
+                            username={'betulhoca'}
+                            name={'Betül Ay'}
+                            src={'/betul.jpg'}
+                        />
                     </li>
                 </ul>
             </div>
@@ -73,9 +101,10 @@ export default function AppSidebar() {
                         <a href="#">Dil</a>
                     </li>
                 </ul>
-                <p className={styles.footerText}>© 2020 INSTAGRAM FROM FACEBOOK</p>
+                <p className={styles.footerText}>
+                    © 2020 INSTAGRAM FROM FACEBOOK
+                </p>
             </footer>
         </div>
     )
 }
-

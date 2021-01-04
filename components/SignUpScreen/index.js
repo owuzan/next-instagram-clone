@@ -12,39 +12,13 @@ export default function SignUpScreen() {
     const handleSubmitForm = (e) => {
         e.preventDefault()
         signUp(email, password, username, fullName)
-
-        // db.collection("users").where("username", "==", username)
-        //     .get()
-        //     .then((users) => {
-        //         if (users.docs.length === 0) {
-        //             auth.createUserWithEmailAndPassword(email, password)
-        //                 .then(response => {
-        //                     auth.signInWithEmailAndPassword(email, password)
-        //                     const uid = auth.currentUser.uid
-        //                     db.doc(`users/${uid}`).set({
-        //                         name: fullName,
-        //                         username,
-        //                         email: auth.currentUser.email,
-        //                         privacy: false,
-        //                         time: new Date(auth.currentUser.metadata.creationTime)
-        //                     })
-        //                 })
-        //         }
-        //         // response.forEach((doc) => {
-        //         //     // doc.data() is never undefined for query doc snapshots
-        //         //     console.log(doc.id, " => ", doc.data())
-        //         // })
-        //     })
-        //     .catch((error) => {
-        //         console.log("Error getting documents: ", error)
-        //     })
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.signUpPage}>
                 <div className={styles.signUpWrapper}>
-                    <form>
+                    <form onSubmit={(e) => handleSubmitForm(e)}>
                         <div className={styles.brand}>
                             <Link href="/">
                                 <a>
