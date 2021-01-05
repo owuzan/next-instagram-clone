@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import UserImage from '../../components/UserImage'
-import UserStatistics from '../../components/UserStatistics'
-import EditProfileBtn from '../../components/EditProfileBtn'
-import UserInfo from '../../components/UserInfo'
+import UserImage from '../UserImage'
+import UserStatistics from '../UserStatistics'
+import EditProfileBtn from '../EditProfileBtn'
+import UserInfo from '../UserInfo'
 import UserPosts from '../UserPosts'
 
 import useWindowSize from '../../hooks/useWindowSize'
@@ -11,25 +11,33 @@ import { useRouter } from 'next/router'
 
 import * as Icons from '../../icons'
 
-import { getCurrentUserData } from '../../lib/db'
+import { getUserData, getUserIdFromUsername } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
 export default function Profile() {
     const router = useRouter()
-    const route = router?.route
+    const route = router.route
     const { user } = useAuth()
     const [myProfile, setMyProfile] = React.useState(false)
     const [userData, setUserData] = React.useState('')
+
     React.useEffect(async () => {
-        setUserData(await getCurrentUserData(await user?.id))
-    }, [user])
+        const userId = await getUserIdFromUsername(router.query.username)
+        if (userId) {
+            setUserData({
+                id: userId,
+                ...(await getUserData(userId)),
+            })
+        } else {
+            setUserData(false)
+        }
+    }, [user, router.query.username])
+
     React.useEffect(() => {
-        router.query.username === userData.username
-            ? setMyProfile(true)
-            : setMyProfile(false)
-    }, [userData, router.query.username])
+        user.id === userData.id ? setMyProfile(true) : setMyProfile(false)
+    }, [userData])
+
     const ww = useWindowSize().width
 
-    console.log(router)
     return (
         <div className={styles.profilePage}>
             <header className={styles.profilePageHeader}>
@@ -46,10 +54,20 @@ export default function Profile() {
                             <h2 className={styles.usernameTitle}>
                                 {userData.username}
                             </h2>
-                            {myProfile ? <EditProfileBtn /> : ''}
-                            <button className={styles.profileSettingsBtn}>
-                                <Icons.Options style={{ fontSize: '24px' }} />
-                            </button>
+                            {myProfile ? (
+                                <>
+                                    <EditProfileBtn />
+                                    <button
+                                        className={styles.profileSettingsBtn}
+                                    >
+                                        <Icons.Options
+                                            style={{ fontSize: '24px' }}
+                                        />
+                                    </button>
+                                </>
+                            ) : (
+                                ''
+                            )}
                         </div>
                     ) : (
                         ''
@@ -70,7 +88,7 @@ export default function Profile() {
                 <div className={styles.userContentTabs}>
                     <button
                         className={
-                            route === '/[username]'
+                            !(router.query?.index == 'saved')
                                 ? styles.activeTab
                                 : undefined
                         }
@@ -87,13 +105,15 @@ export default function Profile() {
                     </button>
                     <button
                         className={
-                            route === '/[username]/saved'
+                            router.query?.index == 'saved'
                                 ? styles.activeTab
                                 : undefined
                         }
                         onClick={() =>
                             router.push(
-                                `/${userData.username}/saved`,
+                                {
+                                    pathname: `/${userData.username}/saved`,
+                                },
                                 undefined,
                                 {
                                     shallow: true,
@@ -107,10 +127,8 @@ export default function Profile() {
                         <span className={styles.tab}>Kaydedilenler</span>
                     </button>
                 </div>
-                {route === '/[username]' ? <UserPosts /> : ''}
-                {route === '/[username]/saved'
-                    ? 'Kayıtlı gönderiler gösterilecek burada'
-                    : ''}
+                {router.query?.index == 'saved' ? 'Kayıtlı gönderiler' : ''}
+                {router.query?.index != 'saved' ? <UserPosts /> : ''}
             </div>
         </div>
     )

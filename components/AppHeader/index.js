@@ -1,24 +1,24 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import useWindowSize from '../../hooks/useWindowSize'
-import useRouter from 'next/router'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import * as Icons from '../../icons'
 import Container from '../Container'
 import UserImage from '../UserImage'
 
-import { getCurrentUserData } from '../../lib/db'
+import { getUserData } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
 export default function AppHeader() {
     const { user, signout } = useAuth()
     const [userData, setUserData] = React.useState('')
     React.useEffect(async () => {
-        setUserData(await getCurrentUserData(await user?.id))
+        setUserData(await getUserData(await user?.id))
     }, [user])
 
     const windowSize = useWindowSize()
     const ww = windowSize.width
-    const router = useRouter.router
+    const router = useRouter()
     const [route, setRoute] = React.useState('/')
     const signOutHandle = (e) => {
         e.preventDefault()
@@ -152,7 +152,15 @@ export default function AppHeader() {
                                 {ww < 600 ? (
                                     <Link href={`/${userData.username}`}>
                                         <a>
-                                            <UserImage size={22} />
+                                            {userData.username ==
+                                            router.query.username ? (
+                                                <UserImage
+                                                    type="active"
+                                                    size={22}
+                                                />
+                                            ) : (
+                                                <UserImage size={22} />
+                                            )}
                                         </a>
                                     </Link>
                                 ) : (
@@ -164,7 +172,15 @@ export default function AppHeader() {
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <UserImage size={22} />
+                                        {userData.username ==
+                                        router.query.username ? (
+                                            <UserImage
+                                                type="active"
+                                                size={22}
+                                            />
+                                        ) : (
+                                            <UserImage size={22} />
+                                        )}
                                         <div
                                             className={styles.profileDropdown}
                                             ref={dropdown}

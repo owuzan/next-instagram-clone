@@ -1,7 +1,7 @@
 import styles from './styles.module.scss'
 import UserImage from '../UserImage'
 import SuggessionUser from '../SugessionUser'
-import { getCurrentUserData } from '../../lib/db'
+import { getUserData } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
 import React from 'react'
 
@@ -10,7 +10,7 @@ export default function AppSidebar() {
     const [userData, setUserData] = React.useState('')
 
     React.useEffect(async () => {
-        setUserData(await getCurrentUserData(await user?.id))
+        setUserData(await getUserData(await user?.id))
     }, [user])
     return (
         <div className={styles.sidebarInner}>
