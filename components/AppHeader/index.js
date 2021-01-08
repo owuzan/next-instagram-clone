@@ -35,6 +35,10 @@ export default function AppHeader() {
         dropdown?.current?.classList?.toggle(styles.show)
     }
 
+    const addPostHandle = () => {
+        console.log('Gönderi ekleme işlemleri burada yapılacak.')
+    }
+
     if (user) {
         return (
             <header className={styles.header}>
@@ -113,11 +117,9 @@ export default function AppHeader() {
                                                 <Icons.Search />
                                             </a>
                                         </Link>
-                                        <Link href="/?addPost">
-                                            <a>
-                                                <Icons.AddPost />
-                                            </a>
-                                        </Link>
+                                        <a onClick={addPostHandle}>
+                                            <Icons.AddPost />
+                                        </a>
                                     </>
                                 ) : (
                                     <>
@@ -205,6 +207,12 @@ export default function AppHeader() {
                                                     <span>Kaydedildi</span>
                                                 </a>
                                             </Link>
+                                            <a onClick={addPostHandle}>
+                                                <div>
+                                                    <Icons.AddPost />
+                                                </div>
+                                                <span>Gönderi Ekle</span>
+                                            </a>
                                             <Link href="/">
                                                 <a
                                                     className={

@@ -88,7 +88,10 @@ export default function Profile() {
                 <div className={styles.userContentTabs}>
                     <button
                         className={
-                            !(router.query?.index == 'saved')
+                            !(
+                                router.query?.index == 'saved' ||
+                                router.query?.index == 'tagged'
+                            )
                                 ? styles.activeTab
                                 : undefined
                         }
@@ -103,16 +106,43 @@ export default function Profile() {
                         </span>
                         <span className={styles.tab}>Gönderiler</span>
                     </button>
+                    {myProfile ? (
+                        <button
+                            className={
+                                router.query?.index == 'saved'
+                                    ? styles.activeTab
+                                    : undefined
+                            }
+                            onClick={() =>
+                                router.push(
+                                    {
+                                        pathname: `/${userData.username}/saved`,
+                                    },
+                                    undefined,
+                                    {
+                                        shallow: true,
+                                    }
+                                )
+                            }
+                        >
+                            <span className={styles.icon}>
+                                <Icons.Bookmark />
+                            </span>
+                            <span className={styles.tab}>Kaydedilenler</span>
+                        </button>
+                    ) : (
+                        ''
+                    )}
                     <button
                         className={
-                            router.query?.index == 'saved'
+                            router.query?.index == 'tagged'
                                 ? styles.activeTab
                                 : undefined
                         }
                         onClick={() =>
                             router.push(
                                 {
-                                    pathname: `/${userData.username}/saved`,
+                                    pathname: `/${userData.username}/tagged`,
                                 },
                                 undefined,
                                 {
@@ -122,13 +152,21 @@ export default function Profile() {
                         }
                     >
                         <span className={styles.icon}>
-                            <Icons.Bookmark />
+                            <Icons.Tagged />
                         </span>
-                        <span className={styles.tab}>Kaydedilenler</span>
+                        <span className={styles.tab}>Etiketlenenler</span>
                     </button>
                 </div>
                 {router.query?.index == 'saved' ? 'Kayıtlı gönderiler' : ''}
-                {router.query?.index != 'saved' ? <UserPosts /> : ''}
+                {router.query?.index == 'tagged'
+                    ? 'Etiketlenen gönderiler'
+                    : ''}
+                {router.query?.index == 'saved' ||
+                router.query?.index == 'tagged' ? (
+                    ''
+                ) : (
+                    <UserPosts />
+                )}
             </div>
         </div>
     )

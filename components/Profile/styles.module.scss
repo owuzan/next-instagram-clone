@@ -107,17 +107,16 @@
                     &::after {
                         content: "";
                         position: absolute;
-                        height: 1px;
+                        height: 0.5px;
                         width: 100%;
-                        top: 0px;
-                        // transform: translateY(-1px);
+                        top: -1px;
                         display: block;
                         z-index: 1;
                         background-color: var(--black);
                         @media (max-width: 734.98px) {
                             top: unset;
+                            height: 1px;
                             bottom: 0;
-                            transform: unset;
                         }
                     }
                 }
