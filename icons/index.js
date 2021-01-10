@@ -1,4 +1,5 @@
 export { default as AddPost } from './AddPost'
+export { default as Back } from './Back'
 export { default as Bookmark } from './Bookmark'
 export { default as BookmarkFill } from './BookmarkFill'
 export { default as Camera } from './Camera'

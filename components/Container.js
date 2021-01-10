@@ -1,4 +1,4 @@
-export default function Container({children, ...props}) {
+export default function Container({ children, ...props }) {
     return (
         <div className="container" {...props}>
             {children}
