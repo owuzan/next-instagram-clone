@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Loader from '../../components/Loader'
 import { usernameExist } from '../../lib/db'
 
-export default function index() {
+const ProfilePage = () => {
     const router = useRouter()
     const { user, loading } = useAuth()
     const [isUserExist, setIsUserExist] = React.useState(false)
@@ -31,3 +31,4 @@ export default function index() {
         }
     }
 }
+export default ProfilePage

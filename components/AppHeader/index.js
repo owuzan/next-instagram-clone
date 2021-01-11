@@ -9,12 +9,23 @@ import UserImage from '../UserImage'
 
 import { getUserData } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
+import { searchUser } from '../../lib/db'
+import AddPostModal from '../AddPostModal'
+
+import SearchResults from '../SearchResults'
+
 export default function AppHeader() {
     const { user, signout } = useAuth()
     const [userData, setUserData] = React.useState('')
+    const [searchResult, setSearchResult] = React.useState([])
     React.useEffect(async () => {
         setUserData(await getUserData(await user?.id))
     }, [user])
+
+    const [searchInput, setSearchInput] = React.useState('')
+    React.useEffect(async () => {
+        setSearchResult(await searchUser(searchInput))
+    }, [searchInput])
 
     const windowSize = useWindowSize()
     const ww = windowSize.width
@@ -35,13 +46,20 @@ export default function AppHeader() {
         dropdown?.current?.classList?.toggle(styles.show)
     }
 
-    const addPostHandle = () => {
-        console.log('Gönderi ekleme işlemleri burada yapılacak.')
+    const uploadRef = React.useRef(null)
+    const [file, setFile] = React.useState(null)
+    const addPost = () => {
+        if (uploadRef.current.files.length) {
+            setFile(uploadRef.current.files[0])
+        } else {
+            setFile(null)
+        }
     }
 
     if (user) {
         return (
             <header className={styles.header}>
+                <AddPostModal file={file} setFile={setFile} />
                 <Container>
                     <div className={styles.headerInner}>
                         <div className={styles.brand}>
@@ -87,7 +105,40 @@ export default function AppHeader() {
                                         name="search"
                                         autoComplete="off"
                                         placeholder="Ara"
+                                        onChange={(e) =>
+                                            setSearchInput(e.target.value)
+                                        }
+                                        value={searchInput}
                                     />
+                                    {searchInput && (
+                                        <button
+                                            onClick={() => setSearchInput('')}
+                                        >
+                                            <span
+                                                style={{
+                                                    transform: 'rotate(180deg)',
+                                                    display: 'block',
+                                                }}
+                                            >
+                                                <Icons.Back />
+                                            </span>
+                                            <span
+                                                style={{
+                                                    display: 'block',
+                                                }}
+                                            >
+                                                <Icons.Back />
+                                            </span>
+                                        </button>
+                                    )}
+                                    {searchInput.length > 0 &&
+                                        searchResult.length > 0 && (
+                                            <SearchResults
+                                                result={searchResult}
+                                                searchInput={searchInput}
+                                                setSearchInput={setSearchInput}
+                                            />
+                                        )}
                                 </form>
                             </div>
                         ) : (
@@ -117,8 +168,18 @@ export default function AppHeader() {
                                                 <Icons.Search />
                                             </a>
                                         </Link>
-                                        <a onClick={addPostHandle}>
+                                        <a
+                                            onClick={() =>
+                                                uploadRef.current.click()
+                                            }
+                                        >
                                             <Icons.AddPost />
+                                            <input
+                                                type="file"
+                                                style={{ display: 'none' }}
+                                                ref={uploadRef}
+                                                onChange={addPost}
+                                            />
                                         </a>
                                     </>
                                 ) : (
@@ -207,7 +268,11 @@ export default function AppHeader() {
                                                     <span>Kaydedildi</span>
                                                 </a>
                                             </Link>
-                                            <a onClick={addPostHandle}>
+                                            <a
+                                                onClick={() =>
+                                                    uploadRef.current.click()
+                                                }
+                                            >
                                                 <div>
                                                     <Icons.AddPost />
                                                 </div>

@@ -13,7 +13,6 @@ header.header {
         z-index: 10;
     }
 
-
     .headerInner {
         padding: 9px 0;
         display: flex;
@@ -44,6 +43,7 @@ header.header {
             }
         }
         .searchArea {
+            position: relative;
             input {
                 height: 28px;
                 width: 214px;
@@ -57,6 +57,33 @@ header.header {
                 &::placeholder {
                     color: var(--border-color);
                     text-align: center;
+                }
+            }
+
+            button {
+                all: unset;
+                cursor: pointer;
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1.5em;
+                height: 1.5em;
+                font-size: 12px;
+                background-color: red;
+                display: flex;
+                border-radius: 50px;
+                background-color: var(--border-color);
+                justify-content: center;
+                color: var(--white);
+
+                span {
+                    --top: -2px;
+                    position: absolute;
+                    top: var(--top);
+                    &:last-child {
+                        top: calc(var(--top) + 6px);
+                    }
                 }
             }
             @media (max-width: 999.98px) {
