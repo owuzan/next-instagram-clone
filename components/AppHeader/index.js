@@ -60,6 +60,12 @@ export default function AppHeader() {
         return (
             <header className={styles.header}>
                 <AddPostModal file={file} setFile={setFile} />
+                <input
+                    type="file"
+                    style={{ display: 'none' }}
+                    ref={uploadRef}
+                    onChange={addPost}
+                />
                 <Container>
                     <div className={styles.headerInner}>
                         <div className={styles.brand}>
@@ -174,12 +180,6 @@ export default function AppHeader() {
                                             }
                                         >
                                             <Icons.AddPost />
-                                            <input
-                                                type="file"
-                                                style={{ display: 'none' }}
-                                                ref={uploadRef}
-                                                onChange={addPost}
-                                            />
                                         </a>
                                     </>
                                 ) : (
