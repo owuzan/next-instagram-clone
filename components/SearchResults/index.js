@@ -8,7 +8,7 @@ const SearchResults = (props) => {
     const clickHandle = (e) => {
         setSearchInput('')
     }
-Arama sonuçları için key eklendi
+
     return (
         <div className={styles.searchResults}>
             <ul className={styles.list}>
