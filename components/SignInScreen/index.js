@@ -31,7 +31,6 @@ export default function SignInScreen() {
             <div className={styles.mockups}>
                 <img src="/sign-up.png" alt="" />
             </div>
-            <p>deneme</p>
             <div className={styles.signUpWrapper}>
                 <form className={styles.section}>
                     <div className={styles.brand}>
