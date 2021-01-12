@@ -21,6 +21,7 @@ export default function Profile() {
     const [myProfile, setMyProfile] = React.useState(false)
     const [userData, setUserData] = React.useState('')
 
+    const [pageChange, setPageChange] = React.useState(true)
     React.useEffect(async () => {
         const userId = await getUserIdFromUsername(router.query.username)
         if (userId) {
@@ -31,6 +32,7 @@ export default function Profile() {
         } else {
             setUserData(false)
         }
+        setPageChange(!pageChange)
     }, [user, router.query.username])
 
     React.useEffect(() => {
@@ -48,7 +50,7 @@ export default function Profile() {
                     )}
                 </div>
                 <section className={styles.profileMetas}>
-                    {ww >= 735 ? (
+                    {ww >= 735 && (
                         <div className={styles.userHead}>
                             <h2 className={styles.usernameTitle}>
                                 {userData.username}
@@ -67,21 +69,21 @@ export default function Profile() {
                                 </>
                             )}
                         </div>
-                    ) : (
-                        ''
                     )}
-                    <UserStatistics />
+                    {pageChange ? (
+                        <UserStatistics key={true} />
+                    ) : (
+                        <UserStatistics key={false} />
+                    )}
                     {!myProfile && ww < 735 && <ProfileFollowButton />}
-                    {ww >= 735 ? <UserInfo /> : ''}
+                    {ww >= 735 && <UserInfo />}
                 </section>
             </header>
-            {ww < 735 ? (
+            {ww < 735 && (
                 <>
                     <UserInfo />
                     {myProfile ? <EditProfileBtn /> : ''}
                 </>
-            ) : (
-                ''
             )}
             <div className={styles.userContents}>
                 <div className={styles.userContentTabs}>

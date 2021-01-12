@@ -1,0 +1,36 @@
+.followButton,
+.alreadyFollowing,
+.unfollow {
+    padding: 0 24px;
+    height: 30px;
+    font-weight: 500;
+    color: var(--white);
+    background-color: var(--blue) !important;
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    border-radius: 3px;
+    outline: 0;
+    border: 0;
+    margin-left: 20px;
+    text-decoration: none;
+
+    @media (max-width: 735px) {
+        margin-left: 0;
+        margin-top: 12px;
+        align-self: flex-start;
+    }
+}
+.alreadyFollowing {
+    background-color: var(--background-color) !important;
+    border: 1px solid var(--border-color);
+    color: var(--text);
+    padding: 0 9px;
+}
+
+.unfollow {
+    background-color: var(--red) !important;
+    border: 1px solid var(--red);
+    color: var(--white);
+    padding: 0 9px;
+}
