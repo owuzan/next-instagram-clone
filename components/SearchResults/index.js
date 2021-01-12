@@ -8,13 +8,13 @@ const SearchResults = (props) => {
     const clickHandle = (e) => {
         setSearchInput('')
     }
-
+Arama sonuçları için key eklendi
     return (
         <div className={styles.searchResults}>
             <ul className={styles.list}>
                 {result.map((user, index) => {
                     return (
-                        <li className={styles.user}>
+                        <li key={index} className={styles.user}>
                             <Link href={`/${user.username}`}>
                                 <a onClick={clickHandle} tabIndex={index}>
                                     <div className={styles.image}>
