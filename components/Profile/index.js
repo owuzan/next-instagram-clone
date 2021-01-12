@@ -5,6 +5,7 @@ import UserStatistics from '../UserStatistics'
 import EditProfileBtn from '../EditProfileBtn'
 import UserInfo from '../UserInfo'
 import UserPosts from '../UserPosts'
+import ProfileFollowButton from '../ProfileFollowButton'
 
 import useWindowSize from '../../hooks/useWindowSize'
 import { useRouter } from 'next/router'
@@ -15,7 +16,7 @@ import { getUserData, getUserIdFromUsername } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
 export default function Profile() {
     const router = useRouter()
-    const route = router.route
+    const ww = useWindowSize().width
     const { user } = useAuth()
     const [myProfile, setMyProfile] = React.useState(false)
     const [userData, setUserData] = React.useState('')
@@ -36,8 +37,6 @@ export default function Profile() {
         user.id === userData.id ? setMyProfile(true) : setMyProfile(false)
     }, [userData])
 
-    const ww = useWindowSize().width
-
     return (
         <div className={styles.profilePage}>
             <header className={styles.profilePageHeader}>
@@ -54,7 +53,8 @@ export default function Profile() {
                             <h2 className={styles.usernameTitle}>
                                 {userData.username}
                             </h2>
-                            {myProfile ? (
+                            {!myProfile && <ProfileFollowButton />}
+                            {myProfile && (
                                 <>
                                     <EditProfileBtn />
                                     <button
@@ -65,14 +65,13 @@ export default function Profile() {
                                         />
                                     </button>
                                 </>
-                            ) : (
-                                ''
                             )}
                         </div>
                     ) : (
                         ''
                     )}
                     <UserStatistics />
+                    {!myProfile && ww < 735 && <ProfileFollowButton />}
                     {ww >= 735 ? <UserInfo /> : ''}
                 </section>
             </header>
