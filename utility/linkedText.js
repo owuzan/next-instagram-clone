@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
 export default function linkedText(text) {
-    // FIXME En sonra link eklendiği zaman başka karakter olmazsa çalışmıyor.
+    // FIXME En sona link eklendiği zaman başka karakter olmazsa çalışmıyor.
 
-    const words = text.split(" ")
+    const words = text.split(' ')
     let list = words.map((word, index) => {
         if (word.slice(0, 1) === '@') {
             return (
@@ -25,8 +25,8 @@ export default function linkedText(text) {
     let final = []
     let itemType = null
     const content = list.map((item, index) => {
-        if (typeof (item) === 'object') {
-            temp.length > 0 ? final.push(temp.join(" ") + " ") : ""
+        if (typeof item === 'object') {
+            temp.length > 0 ? final.push(temp.join(' ') + ' ') : ''
             final.push(item)
             temp = []
             itemType = 'object'
@@ -34,16 +34,14 @@ export default function linkedText(text) {
             if (index == 0) {
                 temp.push(item)
             } else {
-                temp.push(" " + item)
+                temp.push(' ' + item)
             }
             itemType = 'string'
         }
         if (list.length - 1 === index && itemType === 'string') {
-            final.push(" " + temp.join(" "))
+            final.push(' ' + temp.join(' '))
             return final
         }
     })
-    return (
-        content
-    )
+    return content
 }

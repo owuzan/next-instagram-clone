@@ -3,7 +3,7 @@ import Loader from '../../components/Loader'
 import { useAuth } from '../../lib/auth'
 import { useRouter } from 'next/router'
 
-export default function inbox() {
+export default function direct() {
     const router = useRouter()
     const { user, loading } = useAuth()
 

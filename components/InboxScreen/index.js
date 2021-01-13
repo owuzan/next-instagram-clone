@@ -8,34 +8,38 @@ import MessageHeader from '../../components/MessageHeader'
 import MessageFooter from '../../components/MessageFooter'
 
 import useWindowSize from '../../hooks/useWindowSize'
-
-
 import NewMessage from '../../icons/NewMessage'
+import { useRouter } from 'next/router'
 
 export default function Messages() {
-
+    console.log(useRouter())
     const ww = useWindowSize().width
-    const [activeContact, setActiveContact] = useState(-1)
+    const [activeContact, setActiveContact] = useState(null)
     const [contacts, setContacts] = useState([
         {
-            username: "suleyman",
-            src: "/suleyman.jpg",
-            content: "Buraya uzun bir mesaj yazıyorum bakalım taşan kısmı yan tarafta gizlenecek mi"
+            id: 1,
+            username: 'suleyman',
+            src: '/suleyman.jpg',
+            content:
+                'Buraya uzun bir mesaj yazıyorum bakalım taşan kısmı yan tarafta gizlenecek mi',
         },
         {
-            username: "hasanberkayg",
-            src: "/hasan.jpg",
-            content: "Bir gönderi paylaştı."
+            id: 2,
+            username: 'hasanberkayg',
+            src: '/hasan.jpg',
+            content: 'Bir gönderi paylaştı.',
         },
         {
-            username: "tahirbaba",
-            src: "/serdar.jpg",
-            content: "Bu Türkler neden böyle :D"
+            id: 3,
+            username: 'tahirbaba',
+            src: '/serdar.jpg',
+            content: 'Bu Türkler neden böyle :D',
         },
         {
-            username: "mustafaersoy",
-            src: "/mustafa.jpg",
-            content: "Goril olmak"
+            id: 4,
+            username: 'mustafaersoy',
+            src: '/mustafa.jpg',
+            content: 'Goril olmak',
         },
     ])
     const activeHandle = (e, index) => {
@@ -46,22 +50,26 @@ export default function Messages() {
     // no-screen
     // no-message
     // messages
-    const [contentScreen, setContentScreen] = useState("no-message")
+    const [contentScreen, setContentScreen] = useState('no-message')
     useEffect(() => {
         if (activeContact) {
             if (ww >= 735) {
-                setContentScreen("messages")
+                setContentScreen('messages')
             } else {
-                setContentScreen("no-message")
+                setContentScreen('no-message')
             }
         } else {
             if (ww >= 735) {
-                setContentScreen("no-message")
+                setContentScreen('no-message')
             } else {
-                setContentScreen("no-screen")
+                setContentScreen('no-screen')
             }
         }
     })
+
+    useEffect(() => {
+        console.log(activeContact, contentScreen)
+    }, [activeContact, contentScreen])
 
     return (
         <div className={styles.messagesPage}>
@@ -69,11 +77,9 @@ export default function Messages() {
                 <div className={styles.messagesSidebar}>
                     <div className={styles.sidebarHeader}>
                         <div></div>
-                        <div className={styles.sidebarTop}>
-                            owuzan
-                        </div>
+                        <div className={styles.sidebarTop}>owuzan</div>
                         <div className={styles.newMessageIcon}>
-                            <NewMessage style={{ fontSize: "24" }} />
+                            <NewMessage style={{ fontSize: '24' }} />
                         </div>
                     </div>
                     {/* FIXME activeContact state düzgün çalışmıyor. */}
@@ -87,17 +93,14 @@ export default function Messages() {
                     />
                 </div>
                 <div className={styles.messageContent}>
-                    {
-                        contentScreen === "no-message" ? <NoMessage /> : ""
-                    }
-                    {
-                        contentScreen === "messages" ?
-                            <>
-                                <MessageHeader />
-                                <MessageContent />
-                                <MessageFooter />
-                            </> : ""
-                    }
+                    {contentScreen == 'no-message' && <NoMessage />}
+                    {contentScreen == 'messages' && (
+                        <>
+                            <MessageHeader />
+                            <MessageContent />
+                            <MessageFooter />
+                        </>
+                    )}
                 </div>
             </div>
         </div>
