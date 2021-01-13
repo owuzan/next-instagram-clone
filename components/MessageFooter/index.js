@@ -4,11 +4,10 @@ import * as Icons from '../../icons'
 import sendMessage from '../../utility/sendMessage'
 import { useAuth } from '../../lib/auth'
 
-export default function MessageFooter() {
+export default function MessageFooter({ userId }) {
     const [input, setInput] = useState('')
     const [keyShift, setKeyShift] = useState(false)
     const auth = useAuth()
-    const to = 'UP68CDdQB6Zcjn8Vmdc1v9OsT4R2'
     const inputKeyUpHandle = (e) => (e.keyCode === 16 ? setKeyShift(false) : '')
     const inputKeyDownHandle = (e) => {
         if (e.keyCode === 16) {
@@ -37,8 +36,7 @@ export default function MessageFooter() {
     }
     const sendMessageHandle = (e) => {
         //Mesaj gönderme işlemleri
-        console.log('mesaj gönderildi.')
-        sendMessage(auth.user.id, to, input)
+        sendMessage(auth.user.id, userId, input)
         setTimeout(() => {
             setInput('')
             e.target.setAttribute('rows', 1)

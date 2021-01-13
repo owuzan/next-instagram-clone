@@ -9,43 +9,43 @@ import MessageFooter from '../../components/MessageFooter'
 
 import useWindowSize from '../../hooks/useWindowSize'
 import NewMessage from '../../icons/NewMessage'
+import firebase from '../../lib/firebase'
+import { useAuth } from '../../lib/auth'
 import { useRouter } from 'next/router'
 
 export default function Messages() {
-    console.log(useRouter())
+    const firestore = firebase.firestore()
+    const router = useRouter()
+    const auth = useAuth()
     const ww = useWindowSize().width
     const [activeContact, setActiveContact] = useState(null)
-    const [contacts, setContacts] = useState([
-        {
-            id: 1,
-            username: 'suleyman',
-            src: '/suleyman.jpg',
-            content:
-                'Buraya uzun bir mesaj yazıyorum bakalım taşan kısmı yan tarafta gizlenecek mi',
-        },
-        {
-            id: 2,
-            username: 'hasanberkayg',
-            src: '/hasan.jpg',
-            content: 'Bir gönderi paylaştı.',
-        },
-        {
-            id: 3,
-            username: 'tahirbaba',
-            src: '/serdar.jpg',
-            content: 'Bu Türkler neden böyle :D',
-        },
-        {
-            id: 4,
-            username: 'mustafaersoy',
-            src: '/mustafa.jpg',
-            content: 'Goril olmak',
-        },
-    ])
-    const activeHandle = (e, index) => {
+    const [contacts, setContacts] = useState([])
+    const activeHandle = (e, id) => {
         e.preventDefault()
-        setActiveContact(index)
+        setActiveContact(id)
     }
+    let messageList
+    useEffect(async () => {
+        messageList = firestore
+            .collection(`users/${auth.user.id}/contacts`)
+            .orderBy('time', 'desc')
+            .onSnapshot((res) => {
+                let list = []
+                for (const lastMessage of res.docs) {
+                    list.push({
+                        id: lastMessage.id,
+                        ...lastMessage.data(),
+                    })
+                }
+                setContacts(list)
+            })
+    }, [])
+    useEffect(() => {
+        router.push('/direct/inbox')
+        return () => {
+            messageList()
+        }
+    }, [])
 
     // no-screen
     // no-message
@@ -68,7 +68,9 @@ export default function Messages() {
     })
 
     useEffect(() => {
-        console.log(activeContact, contentScreen)
+        if (activeContact) {
+            router.push(`/direct/t/${activeContact}`)
+        }
     }, [activeContact, contentScreen])
 
     return (
@@ -96,9 +98,9 @@ export default function Messages() {
                     {contentScreen == 'no-message' && <NoMessage />}
                     {contentScreen == 'messages' && (
                         <>
-                            <MessageHeader />
-                            <MessageContent />
-                            <MessageFooter />
+                            <MessageHeader userId={activeContact} />
+                            <MessageContent userId={activeContact} />
+                            <MessageFooter userId={activeContact} />
                         </>
                     )}
                 </div>

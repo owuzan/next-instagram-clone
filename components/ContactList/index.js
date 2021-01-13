@@ -15,21 +15,17 @@ export default function ContactList(props) {
                     index++
                     return (
                         <div
-                            key={index + 1}
-                            onClick={(e) => activeHandle(e, index)}
+                            key={contact.id}
+                            onClick={(e) => activeHandle(e, contact.id)}
                             className={
-                                activeContact === index
+                                activeContact === contact.id
                                     ? styles.contact +
                                       ' ' +
                                       styles.activeContact
                                     : styles.contact
                             }
                         >
-                            <MessageListItem
-                                src={contact.src}
-                                username={contact.username}
-                                content={contact.content}
-                            />
+                            <MessageListItem contact={contact} />
                         </div>
                     )
                 })}
