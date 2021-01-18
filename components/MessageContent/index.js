@@ -25,6 +25,15 @@ export default function MessageContent({ userId }) {
     useEffect(async () => {
         const firestore = firebase.firestore()
         setUserData(await getUserData(userId))
+
+        let oldMessagesQuery = await firestore
+            .collection(`users/${auth.user.id}/contacts/${userId}/messages`)
+            .where('time', '<', new Date())
+            .limit(20)
+            .orderBy('time', 'desc')
+            .get()
+        let oldMessages = oldMessagesQuery.docs.reverse()
+
         userData?.id != userId && getMessages()
         getMessages = firestore
             .collection(`users/${auth.user.id}/contacts/${userId}/messages`)
@@ -35,12 +44,12 @@ export default function MessageContent({ userId }) {
                 // snapshot.docs.forEach((doc) => {
                 // })
                 groups = []
-                snapshot.docs.forEach((doc, index) => {
+                let oldAndNewMessages = [...oldMessages, ...snapshot.docs]
+                oldAndNewMessages.forEach((doc, index) => {
                     const data = {
                         id: doc.id,
                         ...doc.data(),
                     }
-                    // FIXME lastMe konumları düzenlenecek
                     if (data.me) {
                         if (lastMe || lastMe == null) {
                             group.push(data)
@@ -66,22 +75,23 @@ export default function MessageContent({ userId }) {
                 groups.push(group)
                 group = []
                 setMessageGroups(groups)
+                scrollToBottom()
             })
     }, [userId])
     return (
         <div className={styles.messageContentInner}>
             <ul>
                 {messageGroups.map((messageGroup, index) => {
-                    scrollToBottom()
                     return (
                         <MessageSection
                             key={index}
-                            src="/suleyman.jpg"
+                            src={userData?.img ? userData.img : '/user.jpg'}
                             list={messageGroup}
                             me={messageGroup[0]?.me && true}
                         />
                     )
                 })}
+                {scrollToBottom()}
                 <li ref={messageListBottomRef}></li>
                 {/* {scrollToBottom()} */}
                 {/* <MessageSection src="/suleyman.jpg" list={list1} />
