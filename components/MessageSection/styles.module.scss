@@ -31,7 +31,9 @@
             margin-bottom: 8px;
             align-self: flex-start;
             float: left;
+            max-width: 100%;
             background-color: var(--other-message-background);
+            overflow-wrap: break-word;
 
             &:last-child {
                 margin-bottom: 0;

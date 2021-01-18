@@ -6,6 +6,7 @@ import ContactList from '../../components/ContactList'
 import MessageContent from '../../components/MessageContent'
 import MessageHeader from '../../components/MessageHeader'
 import MessageFooter from '../../components/MessageFooter'
+import NewMessageModal from '../NewMessageModal'
 
 import useWindowSize from '../../hooks/useWindowSize'
 import NewMessage from '../../icons/NewMessage'
@@ -20,6 +21,7 @@ export default function Messages() {
     const ww = useWindowSize().width
     const [activeContact, setActiveContact] = useState(null)
     const [contacts, setContacts] = useState([])
+    const [showModal, setShowModal] = useState(false)
     const activeHandle = (e, id) => {
         e.preventDefault()
         setActiveContact(id)
@@ -76,9 +78,17 @@ export default function Messages() {
                     <div className={styles.sidebarHeader}>
                         <div></div>
                         <div className={styles.sidebarTop}>owuzan</div>
-                        <div className={styles.newMessageIcon}>
+                        <button
+                            className={styles.newMessageIcon}
+                            onClick={() =>
+                                setShowModal((showModal) => !showModal)
+                            }
+                        >
                             <NewMessage style={{ fontSize: '24' }} />
-                        </div>
+                        </button>
+                        {showModal && (
+                            <NewMessageModal setShowModal={setShowModal} />
+                        )}
                     </div>
                     {/* FIXME NoMessage componentinin genişlik ayarı yapılacak */}
                     <ContactList

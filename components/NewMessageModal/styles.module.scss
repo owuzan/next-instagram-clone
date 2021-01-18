@@ -1,0 +1,138 @@
+.modal {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 10;
+
+    .modalInner {
+        max-width: 400px;
+        width: 100%;
+        background-color: var(--white);
+        height: 50%;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        header {
+            display: flex;
+            height: 40px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+
+            .close {
+                height: 100%;
+                button {
+                    appearance: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 0;
+                    outline: 0;
+                    background: 0;
+                    height: inherit;
+                    width: 40px;
+                    cursor: pointer;
+                    font-size: 18px;
+                }
+            }
+
+            .title {
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .next {
+                width: 40px;
+            }
+        }
+
+        .search {
+            font-size: 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-bottom: 1px solid var(--border-color);
+
+            label {
+                font-weight: 500;
+                padding: 4px 12px;
+            }
+
+            .inputWrapper {
+                padding: 4px 12px;
+                flex: 1;
+
+                input {
+                    display: block;
+                    width: 100%;
+                    height: 30px;
+                    outline: 0;
+                    border: 0;
+                    font-size: 14px;
+                    transform: translateY(2px);
+
+                    &::placeholder {
+                        color: var(--border-color);
+                    }
+                }
+            }
+        }
+
+        .contacts {
+            font-size: 14px;
+            flex: 1;
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            .title {
+                padding: 16px;
+                font-weight: 500;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                align-self: stretch;
+
+                li {
+                    padding: 8px 16px;
+                    display: flex;
+                    align-items: center;
+                    background-color: var(--white);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: var(--border-light-color);
+                    }
+
+                    .contactInfo {
+                        margin-left: 12px;
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+
+                        .username {
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
