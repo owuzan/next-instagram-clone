@@ -26,25 +26,21 @@ export default function Messages() {
     }
     let messageList
     useEffect(async () => {
+        router.push('/direct/inbox')
         messageList = firestore
             .collection(`users/${auth.user.id}/contacts`)
             .orderBy('time', 'desc')
             .onSnapshot((res) => {
                 let list = []
-                for (const lastMessage of res.docs) {
+                // for (const lastMessage of res.docs) {
+                res.docs.forEach((lastMessage) => {
                     list.push({
                         id: lastMessage.id,
                         ...lastMessage.data(),
                     })
-                }
+                })
                 setContacts(list)
             })
-    }, [])
-    useEffect(() => {
-        router.push('/direct/inbox')
-        return () => {
-            messageList()
-        }
     }, [])
 
     // no-screen
@@ -84,7 +80,6 @@ export default function Messages() {
                             <NewMessage style={{ fontSize: '24' }} />
                         </div>
                     </div>
-                    {/* FIXME activeContact state düzgün çalışmıyor. */}
                     {/* FIXME NoMessage componentinin genişlik ayarı yapılacak */}
                     <ContactList
                         activeContact={activeContact}
