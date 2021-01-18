@@ -5,7 +5,10 @@ export default function MessageSection({
     src = '/user.jpg',
     me = false,
     list = [],
-}) {
+}) {Mesaj yokken resim göstermesi düzeltildi
+    if (!list.length) {
+        return false
+    }
     return (
         <li className={me ? styles.message + ' ' + styles.me : styles.message}>
             <div className={styles.messageSection}>
