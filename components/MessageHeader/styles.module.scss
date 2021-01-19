@@ -10,6 +10,12 @@
         flex: 1;
         align-items: center;
         height: 100%;
+        a {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-color);
+        }
 
         .contactUsername {
             margin-left: 12px;

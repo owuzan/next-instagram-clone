@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 
 import * as Icons from '../../icons'
 
-export default function NoMessage() {
+export default function NoMessage({ setShowModal }) {
     return (
         <div className={styles.noMessageWrapper}>
             <div className={styles.noMessage}>
@@ -11,9 +11,14 @@ export default function NoMessage() {
                     <Icons.Message />
                 </div>
                 <div className={styles.pageTitle}>Mesajların</div>
-                <p className={styles.pageDescription}>Bir arkadaşına veya gruba gizli fotoğraflar ve mesajlar gönder.</p>
+                <p className={styles.pageDescription}>
+                    Bir arkadaşına veya gruba gizli fotoğraflar ve mesajlar
+                    gönder.
+                </p>
                 <div className={styles.noMeesageFooter}>
-                    <button>Mesaj Gönder</button>
+                    <button onClick={() => setShowModal(true)}>
+                        Mesaj Gönder
+                    </button>
                 </div>
             </div>
         </div>

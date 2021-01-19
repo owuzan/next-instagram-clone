@@ -34,7 +34,7 @@ export default function MessageContent({ userId }) {
             .get()
         let oldMessages = oldMessagesQuery.docs.reverse()
 
-        userData?.id != userId && getMessages()
+        // userData?.id != userId && getMessages()
         getMessages = firestore
             .collection(`users/${auth.user.id}/contacts/${userId}/messages`)
             .orderBy('time', 'asc')
@@ -77,6 +77,10 @@ export default function MessageContent({ userId }) {
                 setMessageGroups(groups)
                 scrollToBottom()
             })
+
+        return () => {
+            userData?.id != userId && getMessages()
+        }
     }, [userId])
     return (
         <div className={styles.messageContentInner}>

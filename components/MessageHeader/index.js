@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 import UserUmage from '../UserImage'
 import Info from '../../icons/Info'
 import { getUserData } from '../../lib/db'
+import Link from 'next/link'
 
 export default function MessageHeader({ userId }) {
     const [userData, setUserData] = React.useState('')
@@ -15,10 +16,14 @@ export default function MessageHeader({ userId }) {
     return (
         <div className={styles.messageContentHeader}>
             <div className={styles.contactInfo}>
-                <UserUmage src="/user.jpg" />
-                <span className={styles.contactUsername}>
-                    {userData.username}
-                </span>
+                <Link href={`/${userData.username}`}>
+                    <a>
+                        <UserUmage src="/user.jpg" />
+                        <span className={styles.contactUsername}>
+                            {userData.username}
+                        </span>
+                    </a>
+                </Link>
             </div>
             <button
                 className={styles.userInfoButton}

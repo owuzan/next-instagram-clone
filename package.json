@@ -13,7 +13,8 @@
     "js-cookie": "^2.2.1",
     "next": "10.0.4",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-spinners": "^0.10.4"
   },
   "devDependencies": {
     "sass": "^1.32.0"

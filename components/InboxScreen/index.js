@@ -86,9 +86,6 @@ export default function Messages() {
                         >
                             <NewMessage style={{ fontSize: '24' }} />
                         </button>
-                        {showModal && (
-                            <NewMessageModal setShowModal={setShowModal} />
-                        )}
                     </div>
                     {/* FIXME NoMessage componentinin genişlik ayarı yapılacak */}
                     <ContactList
@@ -100,7 +97,9 @@ export default function Messages() {
                     />
                 </div>
                 <div className={styles.messageContent}>
-                    {contentScreen == 'no-message' && <NoMessage />}
+                    {contentScreen == 'no-message' && (
+                        <NoMessage setShowModal={setShowModal} />
+                    )}
                     {contentScreen == 'messages' && (
                         <>
                             <MessageHeader userId={activeContact} />
@@ -110,6 +109,12 @@ export default function Messages() {
                     )}
                 </div>
             </div>
+            {showModal && (
+                <NewMessageModal
+                    setShowModal={setShowModal}
+                    setActiveContact={setActiveContact}
+                />
+            )}
         </div>
     )
 }
