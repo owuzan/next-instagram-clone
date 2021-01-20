@@ -1,9 +1,16 @@
 import styles from './styles.module.scss'
 import * as Icons from '../../icons/'
+import { ClipLoader } from 'react-spinners'
+import { css } from '@emotion/core'
+
 const Loader = () => {
     return (
         <div className={styles.loader}>
-            <Icons.Loader width={50} height={50} />
+            <ClipLoader
+                css={css`
+                    margin: 40px auto 0 auto;
+                `}
+            />
         </div>
     )
 }
