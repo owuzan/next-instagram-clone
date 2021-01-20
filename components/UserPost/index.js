@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './styles.module.scss'
 import * as Icons from '../../icons'
 import UserImage from '../UserImage'
+import Link from 'next/link'
+import { useAuth } from '../../lib/auth'
+import firebase from '../../lib/firebase'
 
-export default function UserPost({
-    username = 'owuzan',
-    postLikeCount = 144,
-    userSrc = '/owuzan.jpg',
-    postSrc = '/photo-example.jpg',
-    postDescription = 'Kahvesiz asla 🍹',
-}) {
-    const [likeStatus, setLikeStatus] = useState(false)
-    const [likeCount, setLikeCount] = useState(postLikeCount)
+export default function UserPost(props) {
+    const auth = useAuth()
+    const firestore = firebase.firestore()
+    const { id, username, userSrc, postSrc, postDescription, userId } = props
+    const [likeCount, setLikeCount] = useState(0)
     const [saveStatus, setSaveStatus] = useState(false)
     const [input, setInput] = useState('')
     const [clickTime, setClickTime] = useState('')
@@ -26,13 +25,34 @@ export default function UserPost({
                 'Afiyet olsun kardeşim ✌ Bırak bu işleri de artık şu projeyi bitirelim. Ara beni, bitirme projesi için Betül hocamız bizi bekliyor 🤙',
         },
     ])
-    const likePost = () => {
+    const [likeStatus, setLikeStatus] = useState(false)
+    const getLike = () => {
+        firestore
+            .collection(`users/${userId}/posts/${id}/likes`)
+            .get()
+            .then((res) => {
+                res.docs.forEach((user) => {
+                    setLikeStatus(user.id == auth.user.id ? true : false)
+                })
+                setLikeCount(res.docs.length)
+            })
+    }
+    const likePost = async () => {
         if (likeStatus) {
-            setLikeCount(likeCount - 1)
+            await firestore
+                .collection(`users/${userId}/posts/${id}/likes`)
+                .doc(auth.user.id)
+                .delete()
+            setLikeCount((likeCount) => likeCount - 1)
         } else {
-            setLikeCount(likeCount + 1)
+            await firestore
+                .collection(`users/${userId}/posts/${id}/likes`)
+                .doc(auth.user.id)
+                .set({ time: new Date() })
+            setLikeCount((likeCount) => likeCount + 1)
         }
         setLikeStatus(!likeStatus)
+        getLike()
     }
     const savePost = () => {
         setSaveStatus(!saveStatus)
@@ -71,15 +91,22 @@ export default function UserPost({
         }
     }
 
+    useEffect(() => {
+        getLike()
+    }, [])
     return (
         <div className={styles.postWrapper}>
             <div className={styles.postInner}>
                 <header>
                     <div className={styles.userInfo}>
-                        <UserImage type="story" size={32} />
-                        <a href="#" className={styles.userName}>
-                            {username}
-                        </a>
+                        <Link href={`/${username}`}>
+                            <a style={{ display: 'flex' }}>
+                                <UserImage size={32} />
+                            </a>
+                        </Link>
+                        <Link href={`/${username}`}>
+                            <a className={styles.userName}>{username}</a>
+                        </Link>
                     </div>
                     <div className={styles.postPreferences}>
                         <Icons.Preferences />
