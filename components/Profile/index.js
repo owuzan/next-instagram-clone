@@ -129,12 +129,12 @@ export default function Profile() {
                         </div>
                     )}
                     <UserStatistics statistics={userStatistics} />
-                    {!myProfile && ww < 735 && (
+                    {!myProfile && ww < 735 && !loading && (
                         <ProfileFollowButton
                             auth={auth}
                             profileId={profileId}
                             isUserFollowing={isUserFollowing}
-                            setIsUserFollowing={setIsUserFollowing}
+                            setIsUserFollowingHandle={setIsUserFollowingHandle}
                         />
                     )}
                     {ww >= 735 && <UserInfo userData={userData} />}
