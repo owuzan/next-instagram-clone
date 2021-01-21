@@ -2,17 +2,10 @@ import firebase from '../lib/firebase'
 
 const isFollowing = async (authId, userId) => {
     const firestore = firebase.firestore()
-    const docs = await firestore
-        .collection(`users/${authId}/followings`)
+    return await firestore
+        .doc(`users/${authId}/followings/${userId}`)
         .get()
-        .then((res) => res)
-    let result = false
-    docs.forEach((doc) => {
-        if (doc.id == userId) {
-            result = true
-        }
-    })
-    return result
+        .then((res) => res.exists)
 }
 
 export default isFollowing
