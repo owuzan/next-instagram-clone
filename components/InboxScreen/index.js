@@ -26,15 +26,18 @@ export default function Messages() {
         e.preventDefault()
         setActiveContact(id)
     }
-    let messageList
-    useEffect(async () => {
-        router.push('/direct/inbox')
-        messageList = firestore
+    // let messageList
+    useEffect(() => {
+        if (router.query.contact) {
+            setActiveContact(router.query.contact)
+        } else {
+            router.push('/direct/inbox')
+        }
+        let messageList = firestore
             .collection(`users/${auth.user.id}/contacts`)
             .orderBy('time', 'desc')
             .onSnapshot((res) => {
                 let list = []
-                // for (const lastMessage of res.docs) {
                 res.docs.forEach((lastMessage) => {
                     list.push({
                         id: lastMessage.id,
@@ -43,6 +46,9 @@ export default function Messages() {
                 })
                 setContacts(list)
             })
+        return () => {
+            messageList()
+        }
     }, [])
 
     // no-screen
