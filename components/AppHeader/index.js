@@ -62,6 +62,7 @@ export default function AppHeader() {
                 <AddPostModal file={file} setFile={setFile} />
                 <input
                     type="file"
+                    accept="image/png, image/jpg, image/jpeg, image/webp, image/tif, image/tiff, image/jfif"
                     style={{ display: 'none' }}
                     ref={uploadRef}
                     onChange={addPost}

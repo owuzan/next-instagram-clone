@@ -14,7 +14,8 @@
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-spinners": "^0.10.4"
+    "react-spinners": "^0.10.4",
+    "react-timeago": "^5.2.0"
   },
   "devDependencies": {
     "sass": "^1.32.0"

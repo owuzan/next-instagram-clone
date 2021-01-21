@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './styles.module.scss'
 import * as Icons from '../../icons'
 import UserImage from '../UserImage'
 import Link from 'next/link'
 import { useAuth } from '../../lib/auth'
 import firebase from '../../lib/firebase'
+import useWindowSize from '../../hooks/useWindowSize'
+import Timeago from 'react-timeago'
+import turkishStrings from 'react-timeago/lib/language-strings/tr'
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
-export default function UserPost(props) {
+export default function UserPost({ post }) {
     const auth = useAuth()
+    const ww = useWindowSize().width
     const firestore = firebase.firestore()
-    const { id, username, userSrc, postSrc, postDescription, userId } = props
+    const { id, username, image, caption, userId } = post
+    const formatter = buildFormatter(turkishStrings)
     const [likeCount, setLikeCount] = useState(0)
-    const [saveStatus, setSaveStatus] = useState(false)
+    const [savedStatus, setSavedStatus] = useState(false)
     const [input, setInput] = useState('')
     const [clickTime, setClickTime] = useState('')
+    const [showForm, setShowForm] = useState(false)
+    const commentInput = useRef(null)
     const [comments, setComments] = useState([
         {
             author: 'bujats',
@@ -25,20 +33,32 @@ export default function UserPost(props) {
                 'Afiyet olsun kardeşim ✌ Bırak bu işleri de artık şu projeyi bitirelim. Ara beni, bitirme projesi için Betül hocamız bizi bekliyor 🤙',
         },
     ])
-    const [likeStatus, setLikeStatus] = useState(false)
-    const getLike = () => {
+    const [likedStatus, setLikedStatus] = useState(false)
+    const isLiked = () => {
         firestore
             .collection(`users/${userId}/posts/${id}/likes`)
             .get()
             .then((res) => {
                 res.docs.forEach((user) => {
-                    setLikeStatus(user.id == auth.user.id ? true : false)
+                    setLikedStatus(user.id == auth.user.id ? true : false)
                 })
                 setLikeCount(res.docs.length)
             })
     }
+    const isSaved = () => {
+        firestore
+            .doc(`users/${auth.user.id}/savedPosts/${id}/`)
+            .get()
+            .then((res) => {
+                if (res.exists) {
+                    setSavedStatus(true)
+                } else {
+                    setSavedStatus(false)
+                }
+            })
+    }
     const likePost = async () => {
-        if (likeStatus) {
+        if (likedStatus) {
             await firestore
                 .collection(`users/${userId}/posts/${id}/likes`)
                 .doc(auth.user.id)
@@ -51,11 +71,23 @@ export default function UserPost(props) {
                 .set({ time: new Date() })
             setLikeCount((likeCount) => likeCount + 1)
         }
-        setLikeStatus(!likeStatus)
-        getLike()
+        setLikedStatus(!likedStatus)
+        isLiked()
     }
     const savePost = () => {
-        setSaveStatus(!saveStatus)
+        const savedPostsRef = firestore.collection(
+            `users/${auth.user.id}/savedPosts`
+        )
+        if (savedStatus) {
+            savedPostsRef.doc(id).delete()
+            setSavedStatus(false)
+        } else {
+            savedPostsRef.doc(id).set({
+                time: new Date(),
+                ref: `/users/${userId}/posts/${id}`,
+            })
+            setSavedStatus(true)
+        }
     }
     const inputHandle = (value) => {
         setInput(value)
@@ -79,7 +111,8 @@ export default function UserPost(props) {
             const time = new Date().getTime()
             if (time - clickTime < 500) {
                 e.classList.add(styles.heartAnimate)
-                if (!likeStatus) {
+                if (!likedStatus) {
+                    setLikedStatus(true)
                     likePost()
                 }
             }
@@ -92,8 +125,10 @@ export default function UserPost(props) {
     }
 
     useEffect(() => {
-        getLike()
+        isLiked()
+        isSaved()
     }, [])
+
     return (
         <div className={styles.postWrapper}>
             <div className={styles.postInner}>
@@ -120,21 +155,28 @@ export default function UserPost(props) {
                         >
                             <Icons.LikeFill size={96} />
                         </div>
-                        <img src={postSrc} alt="" />
+                        <img src={image} alt="" />
                     </div>
                     <div className={styles.postBody}>
                         <div className={styles.actionButtons}>
                             <button
                                 onClick={() => likePost()}
-                                className={likeStatus ? styles.fillRed : ''}
+                                className={likedStatus ? styles.fillRed : ''}
                             >
-                                {!likeStatus ? (
+                                {!likedStatus ? (
                                     <Icons.Like size={22} />
                                 ) : (
                                     <Icons.LikeFill size={22} />
                                 )}
                             </button>
-                            <button>
+                            <button
+                                onClick={() => {
+                                    setShowForm(true)
+                                    setTimeout(() => {
+                                        commentInput.current.focus()
+                                    }, [10])
+                                }}
+                            >
                                 <Icons.Comment size={22} />
                             </button>
                             <button>
@@ -146,7 +188,7 @@ export default function UserPost(props) {
                                     marginLeft: 'auto',
                                 }}
                             >
-                                {!saveStatus ? (
+                                {!savedStatus ? (
                                     <Icons.Bookmark size={22} />
                                 ) : (
                                     <Icons.BookmarkFill size={22} />
@@ -154,13 +196,23 @@ export default function UserPost(props) {
                             </button>
                         </div>
                         <div className={styles.postInfo}>
-                            <div className={styles.likeCount}>
-                                {likeCount} beğenme
-                            </div>
-                            <div className={styles.postDescription}>
-                                <a href="#">{username}</a>
-                                <span>{postDescription}</span>
-                            </div>
+                            {likeCount > 0 ? (
+                                <div className={styles.likeCount}>
+                                    {likeCount} beğenme
+                                </div>
+                            ) : (
+                                ''
+                            )}
+                            {caption.length > 0 ? (
+                                <div className={styles.postDescription}>
+                                    <Link href={`/${username}`}>
+                                        <a>{username}</a>
+                                    </Link>
+                                    <span>{caption}</span>
+                                </div>
+                            ) : (
+                                ''
+                            )}
                             <ul className={styles.commentsList}>
                                 <li className={styles.commentsCount}>
                                     6 yorumun tümünü gör
@@ -183,35 +235,45 @@ export default function UserPost(props) {
                                         </li>
                                     )
                                 })}
-                                <li className={styles.postTime}>4 SAAT ÖNCE</li>
+                                <li className={styles.postTime}>
+                                    <Timeago
+                                        date={post.time.toDate()}
+                                        formatter={formatter}
+                                    />
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <footer>
-                    <div className={styles.commentForm}>
-                        <div className={styles.formWrapper}>
-                            <form>
-                                <input
-                                    type="text"
-                                    value={input}
-                                    onChange={(e) =>
-                                        inputHandle(e.target.value)
-                                    }
-                                    placeholder="Yorum ekle..."
-                                    required
-                                />
-                                {input ? (
-                                    <button onClick={(e) => sendComment(e)}>
-                                        Paylaş
-                                    </button>
-                                ) : (
-                                    <button disabled>Paylaş</button>
-                                )}
-                            </form>
+                {showForm || ww > 600 ? (
+                    <footer>
+                        <div className={styles.commentForm}>
+                            <div className={styles.formWrapper}>
+                                <form>
+                                    <input
+                                        type="text"
+                                        value={input}
+                                        onChange={(e) =>
+                                            inputHandle(e.target.value)
+                                        }
+                                        placeholder="Yorum ekle..."
+                                        ref={commentInput}
+                                        required
+                                    />
+                                    {input ? (
+                                        <button onClick={(e) => sendComment(e)}>
+                                            Paylaş
+                                        </button>
+                                    ) : (
+                                        <button disabled>Paylaş</button>
+                                    )}
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </footer>
+                    </footer>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     )

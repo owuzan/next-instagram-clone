@@ -92,16 +92,7 @@ export default function Home() {
                             </div>
                         )}
                         {posts.map((post, id) => {
-                            return (
-                                <UserPost
-                                    key={id}
-                                    id={post.id}
-                                    username={post.username}
-                                    postDescription={post.caption}
-                                    postSrc={post.image}
-                                    userId={post.userId}
-                                />
-                            )
+                            return <UserPost key={id} post={post} />
                         })}
                     </div>
                 </div>
