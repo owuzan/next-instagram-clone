@@ -6,14 +6,9 @@ import { useAuth } from '../../lib/auth'
 
 export default function MessageFooter({ userId }) {
     const [input, setInput] = useState('')
-    const [keyShift, setKeyShift] = useState(false)
     const auth = useAuth()
-    const inputKeyUpHandle = (e) => (e.keyCode === 16 ? setKeyShift(false) : '')
     const inputKeyDownHandle = (e) => {
-        if (e.keyCode === 16) {
-            setKeyShift(true)
-        }
-        if (e.keyCode === 13 && !keyShift) {
+        if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault()
             messageControlHandle(e)
         }
@@ -24,15 +19,13 @@ export default function MessageFooter({ userId }) {
     }
 
     const messageControlHandle = (e) => {
-        setInput(input.trim())
-        setTimeout(() => {
-            if (input.length > 0) {
-                sendMessageHandle(e)
-            } else {
-                setInput('')
-                e.target.setAttribute('rows', 1)
-            }
-        }, 0)
+        let tempInput = input.trim()
+        if (tempInput.length > 0) {
+            sendMessageHandle(e)
+        } else {
+            setInput('')
+            e.target.setAttribute('rows', 1)
+        }
     }
     const sendMessageHandle = (e) => {
         //Mesaj gönderme işlemleri
@@ -65,7 +58,6 @@ export default function MessageFooter({ userId }) {
 
                     <textarea
                         onKeyDown={(e) => inputKeyDownHandle(e)}
-                        onKeyUp={(e) => inputKeyUpHandle(e)}
                         onChange={(e) => inputHandle(e)}
                         placeholder="Mesaj..."
                         spellCheck="false"
