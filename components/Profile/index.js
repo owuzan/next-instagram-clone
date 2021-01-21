@@ -6,38 +6,87 @@ import EditProfileBtn from '../EditProfileBtn'
 import UserInfo from '../UserInfo'
 import UserPosts from '../UserPosts'
 import ProfileFollowButton from '../ProfileFollowButton'
+import isFollowing from '../../utility/isFollowing'
 
 import useWindowSize from '../../hooks/useWindowSize'
 import { useRouter } from 'next/router'
-
+import firebase from '../../lib/firebase'
 import * as Icons from '../../icons'
 
 import { getUserData, getUserIdFromUsername } from '../../lib/db'
 import { useAuth } from '../../lib/auth'
 export default function Profile() {
+    const firestore = firebase.firestore()
     const router = useRouter()
     const ww = useWindowSize().width
-    const { user } = useAuth()
+    const auth = useAuth()
     const [myProfile, setMyProfile] = React.useState(false)
-    const [userData, setUserData] = React.useState('')
+    const [loading, setLoading] = React.useState(true)
+    const [profileId, setProfileId] = React.useState(null)
+    const [isUserFollowing, setIsUserFollowing] = React.useState(null)
+    const [userData, setUserData] = React.useState({})
+    const [postsCount, setPostsCount] = React.useState(null)
+    const [followersCount, setFollowersCount] = React.useState(null)
+    const [followingsCount, setFollowingsCount] = React.useState(null)
+    const [userStatistics, setUserStatistics] = React.useState({
+        postsCount,
+        followersCount,
+        followingsCount,
+    })
 
-    const [pageChange, setPageChange] = React.useState(true)
-    React.useEffect(async () => {
-        const userId = await getUserIdFromUsername(router.query.username)
-        if (userId) {
-            setUserData({
-                id: userId,
-                ...(await getUserData(userId)),
+    const setIsUserFollowingHandle = (bool) => {
+        setIsUserFollowing(bool)
+        updateUserStatistics(profileId)
+    }
+    const updatePostsCount = (userId) => {
+        firestore
+            .collection(`users/${userId}/posts`)
+            .get()
+            .then((res) => {
+                setPostsCount(res.docs.length)
             })
-        } else {
-            setUserData(false)
-        }
-        setPageChange(!pageChange)
-    }, [user, router.query.username])
+    }
+    const updateFollowersCount = (userId) => {
+        firestore
+            .collection(`users/${userId}/followers`)
+            .get()
+            .then((res) => {
+                setFollowersCount(res.docs.length)
+            })
+    }
+    const updateFollowingsCount = (userId) => {
+        firestore
+            .collection(`users/${userId}/followings`)
+            .get()
+            .then((res) => {
+                setFollowingsCount(res.docs.length)
+            })
+    }
+    const updateUserStatistics = (userId) => {
+        updatePostsCount(userId)
+        updateFollowersCount(userId)
+        updateFollowingsCount(userId)
+    }
+    const updateUserData = async (userId) => {
+        setUserData({
+            id: userId,
+            ...(await getUserData(userId)),
+        })
+    }
+    React.useEffect(async () => {
+        setLoading(true)
+        const userId = await getUserIdFromUsername(router.query.username)
+        setProfileId(userId)
+        setMyProfile(auth.user.id == userId)
+        updateUserStatistics(userId)
+        updateUserData(userId)
+        setIsUserFollowing(await isFollowing(auth.user.id, userId))
+        setLoading(false)
+    }, [router.query.username])
 
     React.useEffect(() => {
-        user.id === userData.id ? setMyProfile(true) : setMyProfile(false)
-    }, [userData])
+        setUserStatistics({ postsCount, followersCount, followingsCount })
+    }, [postsCount, followersCount, followingsCount])
 
     return (
         <div className={styles.profilePage}>
@@ -55,7 +104,16 @@ export default function Profile() {
                             <h2 className={styles.usernameTitle}>
                                 {userData.username}
                             </h2>
-                            {!myProfile && <ProfileFollowButton />}
+                            {!myProfile && !loading && (
+                                <ProfileFollowButton
+                                    auth={auth}
+                                    profileId={profileId}
+                                    isUserFollowing={isUserFollowing}
+                                    setIsUserFollowingHandle={
+                                        setIsUserFollowingHandle
+                                    }
+                                />
+                            )}
                             {myProfile && (
                                 <>
                                     <EditProfileBtn />
@@ -70,18 +128,21 @@ export default function Profile() {
                             )}
                         </div>
                     )}
-                    {pageChange ? (
-                        <UserStatistics key={true} />
-                    ) : (
-                        <UserStatistics key={false} />
+                    <UserStatistics statistics={userStatistics} />
+                    {!myProfile && ww < 735 && (
+                        <ProfileFollowButton
+                            auth={auth}
+                            profileId={profileId}
+                            isUserFollowing={isUserFollowing}
+                            setIsUserFollowing={setIsUserFollowing}
+                        />
                     )}
-                    {!myProfile && ww < 735 && <ProfileFollowButton />}
-                    {ww >= 735 && <UserInfo />}
+                    {ww >= 735 && <UserInfo userData={userData} />}
                 </section>
             </header>
             {ww < 735 && (
                 <>
-                    <UserInfo />
+                    <UserInfo userData={userData} />
                     {myProfile ? <EditProfileBtn /> : ''}
                 </>
             )}
