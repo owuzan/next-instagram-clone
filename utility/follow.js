@@ -2,7 +2,6 @@ import firebase from '../lib/firebase'
 
 const follow = (authId, userId) => {
     const firestore = firebase.firestore()
-    console.log(authId, userId)
     firestore.collection(`users/${authId}/followings`).doc(userId).set({
         time: new Date(),
     })
