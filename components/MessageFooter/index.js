@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styles from './styles.module.scss'
 import * as Icons from '../../icons'
 import sendMessage from '../../utility/sendMessage'
@@ -7,6 +7,7 @@ import { useAuth } from '../../lib/auth'
 export default function MessageFooter({ userId }) {
     const [input, setInput] = useState('')
     const auth = useAuth()
+    const inputRef = useRef(null)
     const inputKeyDownHandle = (e) => {
         if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault()
@@ -48,6 +49,10 @@ export default function MessageFooter({ userId }) {
             textarea.setAttribute('rows', rowsCount)
         }
     }
+
+    useEffect(() => {
+        inputRef.current.focus()
+    })
     return (
         <div className={styles.messageContentFooter}>
             <div className={styles.messageFormWrapper}>
@@ -57,6 +62,7 @@ export default function MessageFooter({ userId }) {
                     </button>
 
                     <textarea
+                        ref={inputRef}
                         onKeyDown={(e) => inputKeyDownHandle(e)}
                         onChange={(e) => inputHandle(e)}
                         placeholder="Mesaj..."
