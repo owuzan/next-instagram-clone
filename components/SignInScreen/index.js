@@ -7,8 +7,8 @@ export default function SignInScreen() {
     const auth = useAuth()
     const refPassword = React.useRef()
 
-    const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
-    const [password, setPassword] = useState('12345678')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const handlePasswordInputType = (e) => {
         e.preventDefault()
