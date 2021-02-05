@@ -11,7 +11,6 @@ export default function StoriesBar() {
                     <StoryItem username="musto" src="mustafa.jpg" />
                     <StoryItem username="erkanke" src="erkan.jpg" />
                     <StoryItem username="tahirbaba" src="serdar.jpg" />
-                    <StoryItem username="gamzelii" src="ivana.jpg" />
                 </ul>
             </div>
         </div>
