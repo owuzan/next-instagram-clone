@@ -13,7 +13,9 @@ export default function SignUpScreen() {
     const handleSubmitForm = async (e) => {
         e.preventDefault()
         signUp(email, password, username, fullName).then((res) => {
-            setError(res.message)
+            if (res) {
+                setError(res.message)
+            }
         })
     }
 

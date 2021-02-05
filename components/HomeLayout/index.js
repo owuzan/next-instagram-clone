@@ -51,17 +51,7 @@ export default function Home() {
                         })
                 })
             )
-
-        // followings.forEach(async (user) => {
-        //     await firestore
-        //         .collection(`users/${user.id}/posts`)
-        //         .orderBy('time', 'desc')
-        //         .limit(10)
-        //         .get()
-        //         .then((res) => {
-        //             res.docs.length && followingsPosts.push(res.docs)
-        //         })
-        // })
+        setLoading(false)
     }, [])
 
     return (
@@ -70,18 +60,6 @@ export default function Home() {
                 <div className={styles.mainLayout}>
                     <StoriesBar />
                     <div className={styles.posts}>
-                        {/* {
-                            <>
-                                <UserPost />
-                                <UserPost
-                                    username={'suleyman'}
-                                    userSrc={'/suleyman.jpg'}
-                                    postSrc={'/suleyman-example.jpg'}
-                                    postDescription={'Uğraştırma'}
-                                />
-                            </>
-                        } */}
-
                         {loading && (
                             <div style={{ textAlign: 'center' }}>
                                 <ClipLoader
