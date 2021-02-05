@@ -1,5 +1,4 @@
 import styles from './styles.module.scss'
-import * as Icons from '../../icons/'
 import { ClipLoader } from 'react-spinners'
 import { css } from '@emotion/core'
 

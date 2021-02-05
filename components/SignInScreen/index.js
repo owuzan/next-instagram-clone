@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-// import { auth } from 'firebase'
 import { useAuth } from '../../lib/auth'
 
 export default function SignInScreen() {
@@ -10,6 +9,7 @@ export default function SignInScreen() {
 
     const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
     const [password, setPassword] = useState('12345678')
+    const [error, setError] = useState('')
     const handlePasswordInputType = (e) => {
         e.preventDefault()
         if (refPassword.current.type === 'password') {
@@ -21,9 +21,12 @@ export default function SignInScreen() {
         }
     }
 
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault()
-        auth.signIn(email, password)
+        let isError = await auth.signIn(email, password)
+        if (isError) {
+            setError(isError.message)
+        }
     }
 
     return (
@@ -46,6 +49,8 @@ export default function SignInScreen() {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="E-posta"
                             value={email}
+                            tabIndex="1"
+                            autoFocus={true}
                         />
                     </div>
                     <div className={styles.field}>
@@ -55,18 +60,22 @@ export default function SignInScreen() {
                             ref={refPassword}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            tabIndex="1"
+                            className={styles.passwordInput}
                         />
-                        <button
+                        <div
+                            role="button"
                             onClick={(e) => handlePasswordInputType(e)}
                             className={styles.showOrHide}
                         >
                             Göster
-                        </button>
+                        </div>
                     </div>
                     <div className={styles.field}>
                         <button
                             onClick={(e) => handleSignIn(e)}
                             className={styles.loginBtn}
+                            tabIndex="1"
                         >
                             Giriş Yap
                         </button>
@@ -79,6 +88,11 @@ export default function SignInScreen() {
                         <img src="/facebook-logo.png" alt="" />
                         <a href="#">Facebook ile Giriş Yap</a>
                     </div>
+                    {error ? (
+                        <div className={styles.errorMessage}>{error}</div>
+                    ) : (
+                        ''
+                    )}
                     <div className={styles.forgotPassword}>
                         <a href="#">Şifreni mi unuttun?</a>
                     </div>

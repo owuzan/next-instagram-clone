@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import { getUserPosts, getUserIdFromUsername } from '../../lib/db'
-import { useAuth } from '../../lib/auth'
 import { useRouter } from 'next/router'
 import usePostsFormat from '../../hooks/usePostsFormat'
 

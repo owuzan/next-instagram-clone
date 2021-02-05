@@ -78,6 +78,7 @@
                     right: 10px;
                     top: 50%;
                     transform: translateY(-50%);
+                    font-size: 13.3333px;
                 }
             }
 
@@ -198,4 +199,13 @@
             margin-top: 20px;
         }
     }
+}
+.passwordInput {
+    padding-right: 50px !important;
+}
+.errorMessage {
+    margin: 40px 10px;
+    color: var(--red);
+    font-weight: 400;
+    font-size: 14px;
 }

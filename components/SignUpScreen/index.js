@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import { signUp, usernameExist } from '../../lib/db'
+import { signUp } from '../../lib/db'
 
 export default function SignUpScreen() {
-    const [email, setEmail] = useState('ooguzhanyilmazz41@gmail.com')
-    const [fullName, setFullName] = useState('Oğuzhan Yılmaz')
-    const [username, setUsername] = useState('owuzan')
-    const [password, setPassword] = useState('12345678')
+    const [email, setEmail] = useState('')
+    const [fullName, setFullName] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
-    const handleSubmitForm = (e) => {
+    const handleSubmitForm = async (e) => {
         e.preventDefault()
-        signUp(email, password, username, fullName)
+        signUp(email, password, username, fullName).then((res) => {
+            setError(res.message)
+        })
     }
 
     return (
@@ -80,6 +83,11 @@ export default function SignUpScreen() {
                                 Kaydol
                             </button>
                         </div>
+                        {error ? (
+                            <div className={styles.errorMessage}>{error}</div>
+                        ) : (
+                            ''
+                        )}
                         <div className={styles.terms}>
                             Kaydolarak, <a href="#">Koşullar</a>'ı,{' '}
                             <a href="#">Veri İlkesi</a>'ni ve{' '}

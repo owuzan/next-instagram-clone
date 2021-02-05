@@ -9,6 +9,7 @@
     "svgtocomponent": "npx @svgr/cli -d icons svgs --icon --replace-attr-values #262626=currentColor"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "firebase": "^8.2.1",
     "js-cookie": "^2.2.1",
     "next": "10.0.4",
