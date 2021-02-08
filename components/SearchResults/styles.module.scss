@@ -30,9 +30,9 @@
     background-color: var(--white);
     display: flex;
     max-height: 360px;
-    overflow-y: auto;
     flex-direction: column;
     overflow: hidden;
+    overflow-y: auto;
 }
 .user {
     border-bottom: 1px solid var(--border-color);
